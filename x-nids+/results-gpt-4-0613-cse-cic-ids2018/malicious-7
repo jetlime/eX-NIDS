@@ -1,0 +1,54 @@
+The flagged NetFlow data from the Network Intrusion Detection System (NIDS) is considered malicious due to several indicators that deviate from normal network activity. Here's a detailed analysis of why this particular NetFlow is flagged as malicious, citing specific feature values:
+
+### Malicious NetFlow:
+- **Source IP:** 18.219.193.20
+- **Source Port:** 41260
+- **Destination IP:** 172.31.69.25
+- **Destination Port:** 80
+- **Protocol:** 6 (TCP)
+- **Layer 7 Protocol:** 7.0 (HTTP)
+- **Flow Duration:** 4294717 milliseconds (approximately 71.5 minutes)
+- **Incoming Bytes:** 4088
+- **Outgoing Bytes:** 6015
+- **Incoming Packets:** 28
+- **Outgoing Packets:** 25
+- **TCP Flags:** 27
+- **Client TCP Flags:** 27
+- **Server TCP Flags:** 27
+- **Minimum TTL:** 63
+- **Maximum TTL:** 63
+- **Longest Packet:** 987 bytes
+- **Shortest Packet:** 52 bytes
+- **Retransmitted Incoming Bytes:** 827
+- **Retransmitted Incoming Packets:** 2
+- **Retransmitted Outgoing Bytes:** 0
+- **Retransmitted Outgoing Packets:** 0
+- **ICMP Type:** 15104
+- **ICMP IPv4 Type:** 59
+
+### Indicators of Malicious Activity:
+
+1. **Suspicious Source IP:**
+   - The source IP address 18.219.193.20 is known for SSH brute-force activity. This history of malicious behavior makes any traffic from this IP suspicious.
+
+2. **High Flow Duration:**
+   - The flow duration is 4294717 milliseconds (approximately 71.5 minutes). Such a long-lasting connection is unusual for typical HTTP traffic, which is usually short-lived. Persistent connections can indicate an attacker maintaining access to a system.
+
+3. **TCP Flags:**
+   - The TCP flags value of 27 indicates a combination of SYN, ACK, and FIN flags. This unusual combination can be indicative of scanning or other malicious activities.
+
+4. **Retransmissions:**
+   - There are retransmitted incoming bytes (827 bytes) and packets (2 packets). Retransmissions can indicate network issues, but in the context of other suspicious indicators, they may suggest attempts to maintain a connection despite potential interruptions.
+
+5. **ICMP Anomalies:**
+   - The ICMP Type (15104) and ICMP IPv4 Type (59) values are unusual and not typical for standard HTTP traffic. ICMP anomalies can be indicative of network reconnaissance or other malicious activities.
+
+6. **Traffic Volume and Packet Sizes:**
+   - The flow involves 4088 incoming bytes and 6015 outgoing bytes, with packet sizes ranging from 52 to 987 bytes. While the traffic volume itself is not excessively high, the combination of other indicators makes this flow suspicious.
+
+### Contextual Analysis with Preceding Connections:
+- **Previous Connections:**
+  - The preceding connections involve different source IPs (13.58.98.64 and 18.216.200.189) targeting the same destination IP (172.31.69.25) on ports 22 (SSH) and 80 (HTTP). This pattern suggests a potential reconnaissance phase followed by an attempt to exploit the HTTP service.
+
+### Conclusion:
+The flagged NetFlow data is considered malicious due to the combination of a known malicious source IP, unusually long flow duration, suspicious TCP flags, retransmissions, and ICMP anomalies. These indicators, along with the context of preceding connections, strongly suggest malicious activity, potentially involving reconnaissance, exploitation, and maintaining access to the target system.

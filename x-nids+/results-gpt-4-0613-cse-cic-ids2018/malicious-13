@@ -1,0 +1,69 @@
+The flagged NetFlow data is considered malicious for several reasons, which align with common indicators of malicious activity. Here is a detailed analysis of the specific feature values that support this conclusion:
+
+### Malicious NetFlow Entry:
+- **IPV4_SRC_ADDR**: 18.219.193.20
+- **L4_SRC_PORT**: 37078
+- **IPV4_DST_ADDR**: 172.31.69.25
+- **L4_DST_PORT**: 80
+- **PROTOCOL**: 6 (TCP)
+- **L7_PROTO**: 7.0 (HTTP)
+- **IN_BYTES**: 3010
+- **IN_PKTS**: 25
+- **OUT_BYTES**: 6015
+- **OUT_PKTS**: 25
+- **TCP_FLAGS**: 27
+- **CLIENT_TCP_FLAGS**: 27
+- **SERVER_TCP_FLAGS**: 27
+- **FLOW_DURATION_MILLISECONDS**: 4294655
+- **DURATION_IN**: 312
+- **DURATION_OUT**: 312
+- **MIN_TTL**: 63
+- **MAX_TTL**: 63
+- **LONGEST_FLOW_PKT**: 987
+- **SHORTEST_FLOW_PKT**: 52
+- **MIN_IP_PKT_LEN**: 52
+- **MAX_IP_PKT_LEN**: 987
+- **SRC_TO_DST_SECOND_BYTES**: 6072403.0
+- **DST_TO_SRC_SECOND_BYTES**: 12034812.0
+- **RETRANSMITTED_IN_BYTES**: 0
+- **RETRANSMITTED_IN_PKTS**: 0
+- **RETRANSMITTED_OUT_BYTES**: 987
+- **RETRANSMITTED_OUT_PKTS**: 1
+- **SRC_TO_DST_AVG_THROUGHPUT**: 136000
+- **DST_TO_SRC_AVG_THROUGHPUT**: 272000
+- **NUM_PKTS_UP_TO_128_BYTES**: 40
+- **NUM_PKTS_128_TO_256_BYTES**: 0
+- **NUM_PKTS_256_TO_512_BYTES**: 5
+- **NUM_PKTS_512_TO_1024_BYTES**: 5
+- **NUM_PKTS_1024_TO_1514_BYTES**: 0
+- **TCP_WIN_MAX_IN**: 26883
+- **TCP_WIN_MAX_OUT**: 26847
+
+### Analysis:
+
+1. **Source IP Reputation**:
+   - The source IP address (18.219.193.20) is known for SSH brute-force activity. This historical behavior suggests that the IP is associated with malicious activities.
+
+2. **Repeated Connections**:
+   - The source IP has made multiple connections to the same destination IP (172.31.69.25) on port 80 (HTTP). This repeated access pattern can be indicative of reconnaissance or an attempt to exploit a vulnerability on the web server.
+
+3. **High Traffic Volume**:
+   - The flow has a substantial amount of data transferred (3010 bytes in and 6015 bytes out). While not extremely high, in conjunction with other factors, it raises suspicion.
+
+4. **Flow Duration**:
+   - The flow duration is notably long (4294655 milliseconds or approximately 71.5 minutes). Persistent connections of this length can indicate an attempt to maintain access or perform prolonged data exfiltration.
+
+5. **TCP Flags**:
+   - The TCP flags (27) indicate a combination of SYN, ACK, and FIN flags. This combination is unusual and can be indicative of scanning or probing activities.
+
+6. **Retransmissions**:
+   - There are retransmitted bytes (987) and packets (1) from the server to the client. Retransmissions can occur due to network issues but can also indicate attempts to brute-force or overwhelm the server.
+
+7. **Throughput and Packet Sizes**:
+   - The average throughput values (136000 bps src-to-dst and 272000 bps dst-to-src) and the distribution of packet sizes (a high number of small packets) suggest an abnormal communication pattern. This can be indicative of an attempt to evade detection by using smaller packets.
+
+8. **Consistent TTL Values**:
+   - The consistent TTL values (63) for both minimum and maximum suggest that the packets are likely originating from the same source without significant routing changes, supporting the idea of a controlled, targeted attack.
+
+### Conclusion:
+The combination of the source IP's known malicious history, repeated connections, high traffic volume, long flow duration, unusual TCP flag combinations, retransmissions, and abnormal throughput and packet size distribution collectively indicate that this NetFlow data is likely associated with malicious activity. The behavior observed aligns with patterns typical of reconnaissance, exploitation attempts, or data exfiltration, justifying the flagging of this NetFlow as malicious.

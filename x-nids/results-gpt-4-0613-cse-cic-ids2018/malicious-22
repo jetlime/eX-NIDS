@@ -1,0 +1,15 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **High TCP Flags**: The TCP_FLAGS, CLIENT_TCP_FLAGS, and SERVER_TCP_FLAGS values are 219. This is unusual as the maximum value for TCP flags is typically 63 (when all six flags: URG, ACK, PSH, RST, SYN, and FIN are set). A high value like 219 could indicate that some non-standard flags are being used, which is often a sign of malicious activity.
+
+2. **Large Flow Duration**: The FLOW_DURATION_MILLISECONDS is 4294964, which is approximately 71 minutes. This is a long time for a single flow, especially considering the small number of packets (IN_PKTS and OUT_PKTS are both 5). This could indicate a slow data exfiltration attempt.
+
+3. **High Throughput**: The SRC_TO_DST_AVG_THROUGHPUT and DST_TO_SRC_AVG_THROUGHPUT are 992000 and 2288000 respectively. This high throughput, combined with the long flow duration, could indicate a large amount of data being transferred, which is often a sign of data exfiltration.
+
+4. **Large Packet Sizes**: The LONGEST_FLOW_PKT and MAX_IP_PKT_LEN are both 975, which is close to the maximum size for an IP packet. Large packet sizes can be used to bypass security measures and are often a sign of malicious activity.
+
+5. **Destination Port**: The L4_DST_PORT is 80, which is the standard port for HTTP traffic. Malicious actors often use common ports like this to blend in with normal traffic and avoid detection.
+
+6. **TTL Values**: The MIN_TTL and MAX_TTL are both 127. This is an unusual value for TTL, as it is typically set to a power of 2 minus 1 (like 63 or 255). An unusual TTL value can be a sign of malicious activity.
+
+These suspicious feature values could indicate a variety of malicious activities, including data exfiltration, command and control communication, or an attempt to bypass security measures.

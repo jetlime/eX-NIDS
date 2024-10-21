@@ -1,0 +1,36 @@
+The flagged NetFlow data is considered malicious due to several suspicious characteristics that align with common indicators of malicious activity. Here are the specific feature values and explanations:
+
+1. **Protocol and Port Usage**:
+   - **PROTOCOL: 17 (UDP)** and **L4_DST_PORT: 53 (DNS)**:
+     - DNS traffic typically uses UDP on port 53. However, the use of DNS protocol for potentially malicious activities like data exfiltration or command and control (C&C) communication is common. The flagged flow uses UDP with destination port 53, which is consistent with DNS traffic.
+
+2. **Layer 7 Protocol**:
+   - **L7_PROTO: 0.0 (Unknown)**:
+     - The Layer 7 protocol is marked as unknown. Legitimate DNS traffic should typically have a recognized Layer 7 protocol. The presence of an unknown protocol suggests potential misuse of DNS for non-standard purposes.
+
+3. **Flow Duration**:
+   - **FLOW_DURATION_MILLISECONDS: 0**:
+     - The flow duration is zero milliseconds, indicating an extremely short-lived connection. This can be indicative of scanning or probing activities where the attacker sends minimal data to avoid detection.
+
+4. **TTL Values**:
+   - **MIN_TTL: 128, MAX_TTL: 128**:
+     - The Time To Live (TTL) values are both set to 128. While this is not inherently malicious, consistent TTL values across multiple flows can indicate automated or scripted activity, as legitimate traffic often shows some variation in TTL values.
+
+5. **Packet Sizes**:
+   - **LONGEST_FLOW_PKT: 85 bytes, SHORTEST_FLOW_PKT: 69 bytes**:
+     - The packet sizes are relatively small and consistent. This uniformity can be a sign of automated tools or scripts generating the traffic, which is often seen in scanning or reconnaissance activities.
+
+6. **DNS Query Characteristics**:
+   - **DNS_QUERY_ID: 12586, DNS_QUERY_TYPE: 1, DNS_TTL_ANSWER: 1**:
+     - The DNS query ID and type are standard for a DNS request. However, the TTL answer value is extremely low (1 second), which is unusual for legitimate DNS responses and can indicate an attempt to evade detection or manipulate DNS behavior.
+
+7. **Throughput and Packet Count**:
+   - **SRC_TO_DST_AVG_THROUGHPUT: 1104000 bps, DST_TO_SRC_AVG_THROUGHPUT: 1016000 bps**:
+     - The average throughput values are quite high for such a short duration flow. This discrepancy suggests that the flow is transmitting data at an unusually high rate, which can be a sign of data exfiltration or other rapid data transfer activities.
+   - **NUM_PKTS_UP_TO_128_BYTES: 4**:
+     - All packets in the flow are small (up to 128 bytes), which is consistent with DNS query and response packets but can also indicate attempts to avoid detection by keeping packet sizes small.
+
+8. **Comparison with Previous Flows**:
+   - The previous flows from different source IPs to the same destination IP (172.31.0.2) on port 53 show similar patterns of small packet sizes and short durations. This repeated pattern across multiple source IPs suggests coordinated scanning or probing activities targeting the DNS server.
+
+In summary, the flagged NetFlow data exhibits several characteristics of potentially malicious activity, including the use of an unknown Layer 7 protocol, extremely short flow duration, consistent and small packet sizes, high throughput for a short duration, and anomalous DNS TTL values. These features, combined with the context of similar previous flows, suggest that this traffic is likely part of a scanning, probing, or data exfiltration attempt using DNS.

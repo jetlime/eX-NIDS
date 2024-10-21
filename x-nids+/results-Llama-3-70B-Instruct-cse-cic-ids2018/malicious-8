@@ -1,0 +1,25 @@
+The NetFlow data is considered malicious due to several indicators that suggest anomalous behavior. Here's a breakdown of the features that support this analysis:
+
+1. **Source IP**: The source IP address (18.221.219.4) originates from Hilliard, Ohio, United States, and has been known for malicious activity linked to malware distribution. This raises concerns about the legitimacy of the traffic.
+
+2. **Protocol and Port**: The protocol used is TCP (6), and the destination port is 21, which is commonly associated with FTP control connections. However, the Layer 7 protocol (1) corresponds to FTP_CONTROL, which is unusual for this specific connection. This combination may indicate an attempt to use FTP for malicious purposes.
+
+3. **Traffic Volume**: The incoming and outgoing byte counts (780 and 520, respectively) are relatively low, but the packet count (13 in both directions) suggests a steady flow of traffic. This could be indicative of a low-and-slow attack or data exfiltration attempt.
+
+4. **TCP Flags**: The cumulative TCP flags (22) and client/server flags (2 and 20, respectively) do not show any unusual combinations that would indicate scanning or malicious activities. However, the presence of flags may suggest an attempt to establish a persistent connection.
+
+5. **Flow Duration**: The flow duration is approximately 43 minutes (4294763 milliseconds), which is relatively long for a typical FTP control connection. This could indicate an attempt to maintain access to the system or perform data exfiltration.
+
+6. **Packet Size**: The longest and shortest packet lengths (60 and 40, respectively) are within normal ranges, but the average packet size may be slightly larger than usual. This could be indicative of data exfiltration attempts.
+
+7. **Throughput**: The source-to-destination average throughput is approximately 24,000 bps, which is relatively high for an FTP control connection. This could indicate an attempt to transfer large amounts of data.
+
+Considering these features, the NetFlow data is considered malicious due to the combination of:
+
+* A known malicious source IP address
+* Unusual protocol and port usage (FTP_CONTROL on port 21)
+* Steady flow of traffic with relatively low byte counts
+* Long flow duration
+* Potential data exfiltration attempts indicated by packet sizes and throughput
+
+These indicators suggest that the NetFlow data may be related to malware distribution or data exfiltration activities, which is why it was flagged as malicious by the Network Intrusion Detection System.

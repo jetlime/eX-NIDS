@@ -1,0 +1,31 @@
+The flagged NetFlow data is considered malicious due to several key indicators that align with common patterns of malicious network activity. Here is a detailed analysis:
+
+### Indicators of Malicious Activity:
+
+1. **Source IP Reputation**:
+   - **IPV4_SRC_ADDR: 18.218.115.60** - This IP address originates from Hilliard, Ohio, United States, and is known for being a source of spam emails. This reputation alone raises suspicion about the nature of the traffic.
+
+2. **High Traffic Volume and Throughput**:
+   - **IN_BYTES: 528**, **OUT_BYTES: 1147** - The amount of incoming and outgoing bytes is relatively high for a single flow, which can be indicative of data exfiltration or other malicious activities.
+   - **SRC_TO_DST_AVG_THROUGHPUT: 128000 bps**, **DST_TO_SRC_AVG_THROUGHPUT: 272000 bps** - The average throughput is relatively high, suggesting substantial data transfer within a short period.
+
+3. **Flow Duration**:
+   - **FLOW_DURATION_MILLISECONDS: 4294935 ms** - The flow duration is unusually long (approximately 4294 seconds or ~71.5 minutes). Persistent connections of this length are atypical for standard web traffic and may indicate an attacker maintaining access to a system.
+
+4. **TCP Flags**:
+   - **TCP_FLAGS: 219 (0xDB)** - The combination of TCP flags (SYN, ACK, FIN, RST, PSH, URG) indicates unusual behavior. Normally, a typical connection would not have such a combination of flags set simultaneously.
+   - **CLIENT_TCP_FLAGS: 219**, **SERVER_TCP_FLAGS: 27 (0x1B)** - The client and server TCP flags further confirm the presence of unusual flag combinations, which could be indicative of scanning or other malicious activities.
+
+5. **Packet Sizes**:
+   - **LONGEST_FLOW_PKT: 975 bytes**, **SHORTEST_FLOW_PKT: 40 bytes** - The range of packet sizes is quite broad. While not inherently malicious, the presence of both very small and relatively large packets can indicate attempts to evade detection or perform reconnaissance.
+
+6. **Consistency with Previous Malicious Connections**:
+   - The flagged NetFlow data shares several characteristics with the three preceding connections, all involving different source IPs but targeting the same internal destination IP (172.31.69.28) on port 80 (HTTP):
+     - Similar **TCP_FLAGS** values (219 for client, 27 for server).
+     - Comparable **IN_BYTES** and **OUT_BYTES** values.
+     - Consistent **MIN_TTL** and **MAX_TTL** values (127).
+     - Similar **NUM_PKTS_UP_TO_128_BYTES** and **NUM_PKTS_512_TO_1024_BYTES** values.
+   - This pattern suggests a coordinated effort, possibly indicating a distributed attack or a botnet.
+
+### Conclusion:
+The flagged NetFlow data is considered malicious due to the combination of the source IP's poor reputation, high traffic volume and throughput, unusually long flow duration, suspicious TCP flag combinations, and consistency with previous malicious connections. These indicators collectively point towards potential malicious activities such as data exfiltration, persistent unauthorized access, or reconnaissance.

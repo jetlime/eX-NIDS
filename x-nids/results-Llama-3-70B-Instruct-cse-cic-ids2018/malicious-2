@@ -1,0 +1,19 @@
+This NetFlow sample is considered malicious due to several suspicious features. Here's a breakdown of the key indicators:
+
+1. **Destination port**: The destination port is 80, which is commonly used for HTTP traffic. However, the protocol version (L7_PROTO) is 7.0, indicating that this is not a standard HTTP connection. This discrepancy raises suspicions.
+
+2. **TCP flags**: Both client and server TCP flags are set to 27, which indicates an unusual combination of flags. Specifically, the SYN, FIN, and ACK flags are all set, suggesting a potential attempt to bypass firewalls or evade detection.
+
+3. **Flow duration**: The flow duration is approximately 4295 seconds (around 72 minutes), which is unusually long for a typical HTTP connection. This could indicate an attempt to maintain a persistent connection for malicious purposes.
+
+4. **Packet length distribution**: There's a significant difference between the minimum and maximum packet lengths (52 bytes and 987 bytes, respectively). This diversity in packet sizes may be an attempt to evade detection by network traffic analysis tools.
+
+5. **Throughput**: The average throughput values are relatively high, with the source-to-destination throughput being around 112000 bytes per second and the destination-to-source throughput being around 216000 bytes per second. This could indicate a data transfer or exfiltration activity.
+
+6. **Packet distribution**: There's an unusual distribution of packet sizes, with a significant number of packets in the 256-512 byte range (4 packets) and 512-1024 byte range (4 packets). This pattern may be indicative of encoded or tunneled traffic.
+
+7. **Lack of retransmitted packets**: Despite the long flow duration, there are no retransmitted packets in either direction. This could suggest that the malicious actor is using a reliable, connection-oriented protocol to ensure data delivery.
+
+8. **ICMP and DNS activity**: There's no ICMP or DNS activity observed in this NetFlow sample, which might indicate that the malicious actor is not attempting to scan or resolve hostnames during this connection.
+
+Considering these factors, it's likely that this NetFlow sample represents a malicious communication attempt, possibly involving data exfiltration, command and control (C2) activities, or other types of unauthorized data transfer.

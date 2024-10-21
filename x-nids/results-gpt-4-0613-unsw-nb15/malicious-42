@@ -1,0 +1,19 @@
+The NetFlow data flagged as malicious by the Network Intrusion Detection System (NIDS) can be analyzed based on several suspicious features:
+
+1. **IPV4_SRC_ADDR: 175.45.176.3**: This is the source IP address from where the traffic is originating. If this IP is known to be associated with malicious activities, it can be a strong indicator of a potential threat.
+
+2. **PROTOCOL: 17**: This indicates that the UDP protocol is being used. UDP is often used in Denial of Service (DoS) attacks because it does not require a handshake like TCP, making it easier to spoof IP addresses.
+
+3. **IN_BYTES: 584, IN_PKTS: 2, OUT_BYTES: 0, OUT_PKTS: 0**: These values indicate that there is traffic flowing from the source to the destination, but no traffic is returning from the destination to the source. This is a common characteristic of a one-way attack or scan.
+
+4. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These zero values indicate that the flow duration is extremely short, which is unusual and could suggest an attempted attack or scan.
+
+5. **MIN_TTL: 254, MAX_TTL: 254**: The Time to Live (TTL) values are at their maximum, which could indicate that the packets are not traversing any hops and could be originating from within the network, suggesting a potential internal threat.
+
+6. **SRC_TO_DST_SECOND_BYTES: 584.0, DST_TO_SRC_SECOND_BYTES: 0.0**: This again shows a one-way traffic pattern from source to destination with no returning traffic, which is suspicious.
+
+7. **SRC_TO_DST_AVG_THROUGHPUT: 4672000, DST_TO_SRC_AVG_THROUGHPUT: 0**: The average throughput from source to destination is high, while there is no throughput from destination to source. This could indicate a data exfiltration attempt or a DoS attack.
+
+8. **NUM_PKTS_256_TO_512_BYTES: 2**: All the packets are within this size range, which could be indicative of a specific type of attack or scan.
+
+In conclusion, the combination of these features, such as the one-way traffic, high throughput, and maximum TTL values, suggest that this NetFlow data could be associated with a malicious activity like a DoS attack, scan, or data exfiltration attempt.

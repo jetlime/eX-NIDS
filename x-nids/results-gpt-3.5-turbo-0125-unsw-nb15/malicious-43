@@ -1,0 +1,17 @@
+This NetFlow data is considered malicious due to several suspicious indicators present in the sample. Here are the specific feature values that support this analysis:
+
+1. **Unusual Source and Destination Ports**: The source port (9110) and destination port (111) are not commonly associated with legitimate traffic patterns. Port 111 is often used by the Remote Procedure Call (RPC) protocol, which can be exploited by attackers.
+
+2. **Protocol**: The protocol value of 17 corresponds to UDP, which is commonly used in various types of attacks due to its connectionless nature and potential for amplification attacks.
+
+3. **Minimal Flow Duration**: The flow duration is recorded as 0 milliseconds, which is unusual for a legitimate network flow and may indicate a quick, potentially malicious communication attempt.
+
+4. **Identical TTL Values**: The minimum and maximum TTL values are both 254, which suggests that the traffic may be originating from a source attempting to hide its true location by setting a consistent TTL value.
+
+5. **Unidirectional Traffic**: The flow contains incoming bytes (168) but no outgoing bytes, which is atypical for normal communication patterns and could indicate a one-way data transfer often seen in certain types of attacks.
+
+6. **High Throughput**: The average throughput from source to destination is unusually high at 1344000 bytes per second, which could be indicative of a potential data exfiltration attempt.
+
+7. **Packet Size Distribution**: The flow consists of two packets up to 128 bytes, which is a common pattern observed in reconnaissance or scanning activities.
+
+Based on these characteristics, the NetFlow data is flagged as malicious by the Network Intrusion Detection System due to the combination of suspicious port numbers, protocol, flow duration, TTL values, unidirectional traffic, high throughput, and packet size distribution. These features collectively suggest potentially malicious intent behind the observed network activity.

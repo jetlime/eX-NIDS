@@ -1,0 +1,52 @@
+The flagged NetFlow data is considered malicious due to several indicators that deviate from normal network activity. Let's analyze the specific feature values from the provided NetFlow sample to understand why it is flagged as malicious:
+
+### NetFlow Sample Analysis:
+- **IPV4_SRC_ADDR: 52.14.136.135**
+  - Source IP is known for botnet communication.
+- **L4_SRC_PORT: 52729**
+  - Source port number.
+- **IPV4_DST_ADDR: 172.31.69.25**
+  - Destination IP is an internal address.
+- **L4_DST_PORT: 80**
+  - Destination port is HTTP, which is a common target for malicious activity.
+- **PROTOCOL: 6**
+  - TCP protocol.
+- **L7_PROTO: 7.178**
+  - Application protocol, likely HTTP.
+- **IN_BYTES: 232, OUT_BYTES: 1136**
+  - Low incoming bytes compared to outgoing bytes, which can indicate data exfiltration.
+- **IN_PKTS: 5, OUT_PKTS: 4**
+  - Low number of packets.
+- **TCP_FLAGS: 223**
+  - Unusual combination of TCP flags (0xDF in hex), which includes SYN, FIN, RST, PSH, ACK, URG. This is highly irregular and indicative of malicious activity.
+- **CLIENT_TCP_FLAGS: 222, SERVER_TCP_FLAGS: 27**
+  - Client TCP flags (0xDE in hex) include SYN, FIN, RST, PSH, ACK, URG, ECE. Server TCP flags (0x1B in hex) include SYN, FIN, PSH, ACK, URG. The combination of these flags is uncommon.
+- **FLOW_DURATION_MILLISECONDS: 4294936**
+  - Very long flow duration (~4294 seconds or ~71 minutes), which is unusual for typical HTTP traffic.
+- **DURATION_IN: 31, DURATION_OUT: 0**
+  - Indicates a very short duration for client-to-server communication compared to the overall flow duration.
+- **MIN_TTL: 127, MAX_TTL: 127**
+  - TTL values are consistent, but high TTL values can sometimes indicate traffic from a distant source.
+- **LONGEST_FLOW_PKT: 1004, SHORTEST_FLOW_PKT: 40**
+  - Packet size variation.
+- **MIN_IP_PKT_LEN: 40, MAX_IP_PKT_LEN: 1004**
+  - Range of packet lengths.
+- **SRC_TO_DST_SECOND_BYTES: 232.0, DST_TO_SRC_SECOND_BYTES: 1136.0**
+  - Low data rate from source to destination compared to destination to source.
+- **RETRANSMITTED_IN_BYTES: 0, RETRANSMITTED_IN_PKTS: 0, RETRANSMITTED_OUT_BYTES: 0, RETRANSMITTED_OUT_PKTS: 0**
+  - No retransmissions, which is typical for a clean connection but does not rule out malicious activity.
+- **SRC_TO_DST_AVG_THROUGHPUT: 56000, DST_TO_SRC_AVG_THROUGHPUT: 9088000**
+  - Significant difference in throughput, indicating potential data exfiltration.
+- **NUM_PKTS_UP_TO_128_BYTES: 8, NUM_PKTS_128_TO_256_BYTES: 0, NUM_PKTS_256_TO_512_BYTES: 0, NUM_PKTS_512_TO_1024_BYTES: 1**
+  - Most packets are small, with one larger packet.
+
+### Indicators of Malicious Activity:
+1. **Known Malicious Source IP**: The source IP (52.14.136.135) is known for botnet communication.
+2. **Unusual TCP Flags**: The TCP flags combination (223) is highly irregular and indicative of scanning or other malicious activities.
+3. **Large Flow Duration**: The flow duration is unusually long for typical HTTP traffic.
+4. **Asymmetric Data Transfer**: The significant difference between incoming and outgoing bytes suggests potential data exfiltration.
+5. **High Throughput Discrepancy**: The high discrepancy in average throughput between source-to-destination and destination-to-source further supports the likelihood of data exfiltration.
+6. **Low Packet Count with High Flags**: The low number of packets combined with unusual TCP flags can indicate a stealthy attack or command and control communication.
+
+### Conclusion:
+The combination of these factors, particularly the known malicious source IP, unusual TCP flags, long flow duration, asymmetric data transfer, and high throughput discrepancy, strongly suggests that this NetFlow data represents malicious activity. The Network Intrusion Detection System (NIDS) has correctly flagged this flow based on these indicators.

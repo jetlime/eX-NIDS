@@ -1,0 +1,66 @@
+The flagged NetFlow data is considered malicious based on several indicators that align with common patterns of malicious activity. Here is a detailed analysis of the specific feature values that support this conclusion:
+
+### Malicious NetFlow Entry:
+- **IPV4_SRC_ADDR**: 18.219.193.20
+- **IPV4_DST_ADDR**: 172.31.69.25
+- **L4_SRC_PORT**: 55590
+- **L4_DST_PORT**: 80
+- **PROTOCOL**: 6 (TCP)
+- **L7_PROTO**: 7.0 (HTTP)
+- **IN_BYTES**: 3246
+- **IN_PKTS**: 26
+- **OUT_BYTES**: 6067
+- **OUT_PKTS**: 26
+- **TCP_FLAGS**: 27
+- **CLIENT_TCP_FLAGS**: 27
+- **SERVER_TCP_FLAGS**: 27
+- **FLOW_DURATION_MILLISECONDS**: 4294717
+- **DURATION_IN**: 250
+- **DURATION_OUT**: 250
+- **MIN_TTL**: 63
+- **MAX_TTL**: 63
+- **LONGEST_FLOW_PKT**: 987
+- **SHORTEST_FLOW_PKT**: 52
+- **MIN_IP_PKT_LEN**: 52
+- **MAX_IP_PKT_LEN**: 987
+- **SRC_TO_DST_SECOND_BYTES**: 2571675.0
+- **DST_TO_SRC_SECOND_BYTES**: 48641203.0
+- **RETRANSMITTED_IN_BYTES**: 0
+- **RETRANSMITTED_IN_PKTS**: 0
+- **RETRANSMITTED_OUT_BYTES**: 987
+- **RETRANSMITTED_OUT_PKTS**: 1
+- **SRC_TO_DST_AVG_THROUGHPUT**: 128000
+- **DST_TO_SRC_AVG_THROUGHPUT**: 248000
+- **NUM_PKTS_UP_TO_128_BYTES**: 42
+- **NUM_PKTS_128_TO_256_BYTES**: 0
+- **NUM_PKTS_256_TO_512_BYTES**: 5
+- **NUM_PKTS_512_TO_1024_BYTES**: 5
+- **NUM_PKTS_1024_TO_1514_BYTES**: 0
+- **TCP_WIN_MAX_IN**: 26883
+- **TCP_WIN_MAX_OUT**: 26847
+
+### Indicators of Malicious Activity:
+
+1. **Source IP Reputation**:
+   - The source IP address (18.219.193.20) originates from Hilliard, Ohio, United States, and has been known for SSH brute-force activity. This historical context raises suspicion about the legitimacy of the traffic originating from this IP.
+
+2. **High Traffic Volume**:
+   - The **SRC_TO_DST_SECOND_BYTES** value is 2,571,675 bytes per second, and the **DST_TO_SRC_SECOND_BYTES** value is 48,641,203 bytes per second. These are unusually high values, indicating a large volume of data transfer which could be indicative of data exfiltration or a DDoS attack.
+
+3. **Unusual Packet Sizes**:
+   - The **LONGEST_FLOW_PKT** is 987 bytes, and the **SHORTEST_FLOW_PKT** is 52 bytes. The wide range between the longest and shortest packet sizes can be indicative of abnormal traffic patterns, which are often seen in malicious activities.
+
+4. **Persistent Connections**:
+   - The **FLOW_DURATION_MILLISECONDS** is 4,294,717 milliseconds (approximately 71.5 minutes). This long duration is atypical for standard HTTP traffic, which usually involves shorter-lived connections. Persistent connections can be a sign of an attacker maintaining access to a system.
+
+5. **TCP Flags**:
+   - The **TCP_FLAGS**, **CLIENT_TCP_FLAGS**, and **SERVER_TCP_FLAGS** all have a value of 27. This indicates the presence of SYN, ACK, and FIN flags, which might suggest unusual connection behavior, such as incomplete or abnormal TCP handshakes.
+
+6. **Retransmissions**:
+   - The presence of **RETRANSMITTED_OUT_BYTES** (987 bytes) and **RETRANSMITTED_OUT_PKTS** (1 packet) can indicate network issues or attempts to ensure data delivery, which might be associated with malicious activities trying to guarantee data exfiltration.
+
+7. **Previous Connections**:
+   - The previous connections involving different source IPs (18.219.5.43, 13.58.98.64, 18.219.32.43) to the same destination IP (172.31.69.25) on different ports (80, 22) suggest a pattern of reconnaissance or scanning activity. The presence of multiple source IPs targeting the same destination IP is a common tactic in distributed attacks.
+
+### Conclusion:
+The combination of a known malicious source IP, high traffic volume, unusual packet sizes, persistent connections, specific TCP flag patterns, retransmissions, and previous suspicious connections collectively indicate that this NetFlow data is likely associated with malicious activity. The behavior observed aligns with patterns commonly seen in data exfiltration, DDoS attacks, and reconnaissance activities, justifying the flagging of this NetFlow as malicious.

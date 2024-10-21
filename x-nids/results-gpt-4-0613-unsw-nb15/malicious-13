@@ -1,0 +1,15 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **High Retransmission Rate**: The retransmitted_in_bytes and retransmitted_in_pkts values are quite high (42249 bytes and 31 packets respectively). This indicates that a large amount of data was retransmitted from the source to the destination, which is often a sign of network issues or potential malicious activity such as a Denial of Service (DoS) attack.
+
+2. **Flow Duration**: The flow_duration_milliseconds, duration_in, and duration_out values are all 0. This is unusual as it suggests that the flow of data between the source and destination was instantaneous, which is not typical for normal network traffic.
+
+3. **TCP Flags**: The TCP flags for both client and server are 19. This indicates that the SYN, FIN, and PSH flags are set. This is unusual because typically a TCP connection starts with a SYN flag and ends with a FIN flag. Having both flags set in the same packet could indicate an attempt to bypass firewall rules or other types of intrusion attempts.
+
+4. **High Throughput**: The src_to_dst_avg_throughput is significantly higher than the dst_to_src_avg_throughput (678800000 vs 4608000). This large discrepancy could indicate a data exfiltration attempt, where a large amount of data is being sent from the source to the destination.
+
+5. **TTL Values**: The min_ttl and max_ttl values are 254 and 255 respectively. These are the maximum possible values for this field, which is unusual and could indicate an attempt to avoid network hops detection.
+
+6. **Packet Sizes**: The longest_flow_pkt and max_ip_pkt_len are both 1500, which is the maximum Ethernet packet size. This could indicate an attempt to maximize data transfer in each packet, which is often seen in data exfiltration or DoS attacks.
+
+These are just a few potential indicators of malicious activity. Further investigation would be needed to confirm any malicious intent.

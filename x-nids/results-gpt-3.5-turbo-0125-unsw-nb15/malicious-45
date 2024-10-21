@@ -1,0 +1,18 @@
+This NetFlow data is considered malicious due to several suspicious indicators present in the sample:
+
+1. Unusual Protocol and Port Combination:
+- The combination of Protocol 17 (UDP) with Destination Port 53 (DNS) is commonly associated with DNS tunneling attacks. Attackers can abuse DNS traffic to exfiltrate data or bypass security controls.
+
+2. Abnormal Flow Characteristics:
+- The flow has a very short duration (0 milliseconds) and minimal data transfer, with only 114 bytes transferred in 2 packets. This behavior is atypical for legitimate network traffic and suggests a potential reconnaissance or probing activity.
+
+3. Anomalous TTL Values:
+- Both the Minimum TTL and Maximum TTL values are set to 254, which is not a typical TTL value seen in regular network traffic. This could indicate an attempt to evade detection or disguise the origin of the traffic.
+
+4. Unidirectional Traffic:
+- The flow shows incoming bytes but no outgoing bytes, which is unusual for most legitimate communication patterns. This one-way communication could be indicative of a data exfiltration attempt or a command-and-control communication.
+
+5. DNS Query Characteristics:
+- The DNS Query ID of 5526 and the DNS Query Type of 255 are suspicious values that could be used in DNS tunneling attacks to hide malicious activities within DNS traffic.
+
+In summary, the combination of these features in the NetFlow data suggests a potential malicious activity, such as DNS tunneling, reconnaissance, or data exfiltration. It is important to investigate further and take appropriate action to mitigate any potential security risks posed by this traffic.

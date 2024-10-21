@@ -1,0 +1,11 @@
+The malicious NetFlow data is flagged due to several suspicious features that indicate a potential SSH (Secure Shell) brute-force attack. Here's a breakdown of the key feature values that support this analysis:
+
+1. **Destination port**: The L4_DST_PORT value is 22, which is the default port for SSH connections. This suggests that the traffic is targeting an SSH service.
+2. **Protocol**: The PROTOCOL value is 6, indicating that the traffic is using TCP (Transmission Control Protocol). SSH typically uses TCP as its transport protocol.
+3. **TCP flags**: The TCP_FLAGS value is 27, which indicates that the SYN and ACK flags are set. This is consistent with a client initiating an SSH connection.
+4. **Client and server TCP flags**: Both CLIENT_TCP_FLAGS and SERVER_TCP_FLAGS have a value of 27, suggesting that both the client and server are exchanging SYN and ACK packets, further supporting the notion of an SSH connection.
+5. **Flow duration**: The FLOW_DURATION_MILLISECONDS value is 0, indicating that the flow was very short-lived. This could be indicative of a failed login attempt, which is common in brute-force attacks.
+6. **Packet distribution**: The distribution of packet sizes (NUM_ PKTS_UP_TO_128_BYTES to NUM_PKTS_1024_TO_1514_BYTES) suggests that the traffic consists of small packets, which is typical of SSH connections.
+7. **Throughput**: The SRC_TO_DST_AVG_THROUGHPUT and DST_TO_SRC_AVG_THROUGHPUT values are relatively high (25440000 and 30952000, respectively), indicating a burst of traffic in a short period. This could be indicative of a brute-force attack attempting to send multiple login attempts in a short time frame.
+
+Considering these features, it's likely that the NetFlow data represents a malicious SSH brute-force attack, where an attacker is attempting to guess the credentials of an SSH service by sending multiple login attempts in a short period.

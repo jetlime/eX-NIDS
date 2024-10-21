@@ -1,0 +1,15 @@
+The NetFlow data is flagged as malicious due to several suspicious feature values:
+
+1. **High TCP Flags**: The TCP_FLAGS, CLIENT_TCP_FLAGS, and SERVER_TCP_FLAGS values are unusually high (219). This could indicate that the client and server are using non-standard TCP flags, which is often a sign of malicious activity such as port scanning or DoS attacks.
+
+2. **Large Data Transfer**: The IN_BYTES (503) and OUT_BYTES (1147) values are relatively high, suggesting a large amount of data is being transferred. This could be a sign of data exfiltration or a botnet command and control server.
+
+3. **High Flow Duration**: The FLOW_DURATION_MILLISECONDS value is very high (4294928), indicating that the connection lasted for a long time. This could be a sign of a long-term, persistent connection, which is common in botnet activity or data exfiltration.
+
+4. **Unusual Packet Lengths**: The MIN_IP_PKT_LEN (40) and MAX_IP_PKT_LEN (975) values are at the extreme ends of the range, suggesting that the packets being sent are either very small or very large. This could be a sign of a DoS attack or data exfiltration.
+
+5. **High Throughput**: The SRC_TO_DST_AVG_THROUGHPUT (96000) and DST_TO_SRC_AVG_THROUGHPUT (232000) values are high, indicating a high data transfer rate. This could be a sign of a DoS attack or data exfiltration.
+
+6. **High Number of Small Packets**: The NUM_PKTS_UP_TO_128_BYTES value is high (8), suggesting that a large number of small packets are being sent. This is often a sign of a DoS attack or port scanning.
+
+These feature values suggest that the connection is being used for malicious activity such as a DoS attack, data exfiltration, or botnet command and control.

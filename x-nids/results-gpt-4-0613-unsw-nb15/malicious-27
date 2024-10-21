@@ -1,0 +1,17 @@
+The NetFlow data is considered malicious due to several suspicious features:
+
+1. High Volume of Data Transfer: The IN_BYTES (195184) and OUT_BYTES (2618) values are quite high, indicating a large amount of data being transferred. This could be a sign of data exfiltration, where an attacker is stealing sensitive information.
+
+2. High Retransmission Rate: The RETRANSMITTED_IN_BYTES (97416) and RETRANSMITTED_IN_PKTS (78) are also high. This could be due to network congestion, but it could also be a sign of a Denial of Service (DoS) attack, where an attacker floods the network with traffic to overwhelm it.
+
+3. Unusual TCP Flags: The TCP_FLAGS (27), CLIENT_TCP_FLAGS (27), and SERVER_TCP_FLAGS (19) values are unusual. These flags control how TCP connections are established, maintained, and terminated. Unusual flag values could indicate an attempt to exploit vulnerabilities in the TCP protocol.
+
+4. High Flow Duration: The FLOW_DURATION_MILLISECONDS (4294951) is quite high, indicating a long-lasting connection. This could be a sign of a persistent threat, where an attacker maintains a connection to a victim's network for an extended period.
+
+5. Unusual Port Number: The L4_DST_PORT is 25, which is typically used for SMTP (email). If the network doesn't normally send a lot of email, this could be a sign of spamming or phishing activity.
+
+6. High Throughput: The SRC_TO_DST_AVG_THROUGHPUT (91848000) and DST_TO_SRC_AVG_THROUGHPUT (1232000) are quite high, indicating a lot of data being transferred quickly. This could be another sign of data exfiltration.
+
+7. Unusual ICMP Type: The ICMP_TYPE (34817) and ICMP_IPV4_TYPE (136) are unusual. ICMP is used for error reporting and operational information in IP networks. Unusual ICMP types could indicate an attempt to exploit vulnerabilities in the ICMP protocol.
+
+These features together suggest that the network traffic is likely malicious.

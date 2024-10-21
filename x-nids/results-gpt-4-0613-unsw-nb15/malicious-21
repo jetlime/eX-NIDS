@@ -1,0 +1,19 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **L4_DST_PORT: 80**: This is the default port for HTTP traffic. An attacker might be trying to exploit a vulnerability in the HTTP protocol or perform an HTTP flood attack.
+
+2. **PROTOCOL: 6**: This represents the TCP protocol, which is commonly used in various types of attacks, such as SYN flood attacks, TCP/IP hijacking, etc.
+
+3. **TCP_FLAGS: 19, CLIENT_TCP_FLAGS: 19, SERVER_TCP_FLAGS: 19**: These values indicate that the SYN, FIN, and PSH flags are set. This is unusual because typically, SYN is used to initiate a connection, FIN is used to close a connection, and PSH is used to push data to the receiving end. Having all these flags set at the same time could indicate a type of scanning or evasion technique.
+
+4. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These values indicate that the flow duration is zero, which is highly unusual and could suggest a type of attack where the attacker is trying to overwhelm the system with a large number of connections in a short period of time.
+
+5. **RETRANSMITTED_IN_BYTES: 271, RETRANSMITTED_IN_PKTS: 1**: The presence of retransmitted packets could indicate a network issue or a possible attack. Retransmissions can occur when packets are lost or dropped, which can be a sign of a Denial of Service (DoS) attack.
+
+6. **SRC_TO_DST_AVG_THROUGHPUT: 7152000, DST_TO_SRC_AVG_THROUGHPUT: 2048000**: The average throughput from the source to the destination is significantly higher than from the destination to the source. This could indicate a data exfiltration attempt or a DoS attack.
+
+7. **TCP_WIN_MAX_IN: 16383, TCP_WIN_MAX_OUT: 16383**: These values represent the maximum window size for the TCP connection. A high window size could indicate an attempt to consume excessive bandwidth or resources, which is a common characteristic of a DoS attack.
+
+8. **ICMP_TYPE: 3840, ICMP_IPV4_TYPE: 15**: These values are unusual for ICMP traffic and could indicate an attempt to use ICMP for malicious purposes, such as a ping flood attack or to bypass firewalls.
+
+In conclusion, the combination of these suspicious feature values suggests that this NetFlow data is likely associated with malicious activity.

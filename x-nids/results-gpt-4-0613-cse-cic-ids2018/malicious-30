@@ -1,0 +1,19 @@
+The NetFlow data is flagged as malicious due to several suspicious indicators:
+
+1. **High Flow Duration**: The FLOW_DURATION_MILLISECONDS is 4294920, which is quite high. This could indicate a long-lasting connection, which is often a sign of data exfiltration or command and control communication.
+
+2. **Unusual Port Number**: The L4_SRC_PORT is 57050, which is a high port number. While not inherently malicious, high port numbers can be used by malware to bypass firewall rules.
+
+3. **TCP Flags**: The TCP_FLAGS, CLIENT_TCP_FLAGS, and SERVER_TCP_FLAGS are all set to 27. This value corresponds to the combination of SYN, FIN, and ACK flags, which is unusual. Normal TCP connections start with a SYN flag and end with a FIN or RST flag, but they don't usually have SYN and FIN flags in the same packet. This could indicate an attempt to bypass firewall rules or a SYN flood attack.
+
+4. **High Throughput**: The SRC_TO_DST_AVG_THROUGHPUT and DST_TO_SRC_AVG_THROUGHPUT are 200000 and 400000 respectively. This high throughput could indicate a data exfiltration attempt.
+
+5. **Packet Size**: The MAX_IP_PKT_LEN is 987, which is quite large. Large packets can be used to deliver payloads in a network intrusion attempt.
+
+6. **TCP Window Size**: The TCP_WIN_MAX_IN and TCP_WIN_MAX_OUT are both around 26800, which is quite high. A high TCP window size can indicate a high bandwidth connection, which could be used for data exfiltration.
+
+7. **Destination Port**: The L4_DST_PORT is 80, which is the default port for HTTP traffic. Malicious actors often use this port to blend in with normal web traffic.
+
+8. **Number of Packets**: The number of packets sent (IN_PKTS and OUT_PKTS) is relatively low compared to the amount of data transferred (IN_BYTES and OUT_BYTES), which could indicate the use of large packets to deliver a payload.
+
+These indicators together suggest that the network traffic could be part of a network intrusion attempt, possibly involving data exfiltration or command and control communication.

@@ -1,0 +1,21 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **IPV4_SRC_ADDR: 175.45.176.1 and IPV4_DST_ADDR: 149.171.126.18**: The source and destination IP addresses could be associated with known malicious activities or blacklisted IP addresses.
+
+2. **L4_SRC_PORT: 40269 and L4_DST_PORT: 80**: The source port is a high-numbered ephemeral port, which is normal. However, the destination port is 80, which is typically used for HTTP traffic. If the network protocol isn't HTTP, this could be an attempt to bypass firewall rules.
+
+3. **PROTOCOL: 6**: This indicates the TCP protocol, which is commonly used for many types of internet traffic, including some types of malicious activity.
+
+4. **IN_BYTES: 1282 and OUT_BYTES: 256**: The number of incoming bytes is significantly higher than the number of outgoing bytes. This could indicate a data exfiltration attempt.
+
+5. **TCP_FLAGS: 19, CLIENT_TCP_FLAGS: 19, SERVER_TCP_FLAGS: 19**: These flags indicate that the SYN, FIN, and ACK flags are set. This is unusual because typically a TCP connection starts with a SYN packet and ends with a FIN or RST packet. Having all these flags set in the same packet could indicate an attempt to perform a stealthy port scan or other malicious activity.
+
+6. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These values indicate that the flow duration was extremely short, which is unusual and could indicate a scan or other malicious activity.
+
+7. **RETRANSMITTED_IN_BYTES: 465, RETRANSMITTED_IN_PKTS: 1**: These values indicate that some packets were retransmitted, which could be a sign of a poor connection, or it could indicate malicious activity such as a denial-of-service attack.
+
+8. **SRC_TO_DST_AVG_THROUGHPUT: 10256000, DST_TO_SRC_AVG_THROUGHPUT: 2048000**: The average throughput from the source to the destination is significantly higher than from the destination to the source, which could indicate a data exfiltration attempt.
+
+9. **TCP_WIN_MAX_IN: 16383, TCP_WIN_MAX_OUT: 16383**: These values are unusually high, which could indicate an attempt to perform a TCP window size attack, where the attacker attempts to consume resources on the target system by sending packets with a large window size.
+
+10. **ICMP_TYPE: 53504, ICMP_IPV4_TYPE: 209**: These values are outside the normal range for ICMP types, which could indicate an attempt to use a covert channel or other malicious activity.

@@ -1,0 +1,17 @@
+This NetFlow sample is considered malicious due to several feature values that suggest anomalous and potentially malicious activity. Here's a breakdown of the suspicious features:
+
+1. **L4_DST_PORT: 21**: The destination port is 21, which is typically used for FTP (File Transfer Protocol) services. However, the **FTP_COMMAND_RET_CODE** value is 331.0, which is an unusual response code for FTP commands. This might indicate a potential FTP-related attack or exploitation.
+2. **L7_PROTO: 1.0**: The L7 protocol version is 1.0, which is not a standard or commonly used value. This could be an indication of a custom or malicious application-layer protocol.
+3. **TCP_FLAGS: 24** and **CLIENT_TCP_FLAGS: 24**: The TCP flags indicate that the packet has only the ACK (acknowledgment) flag set. This is unusual, as most TCP connections involve SYN (synchronize), ACK, and other flags. The client-side flags also show an ACK-only packet, which is suspicious.
+4. **FLOW_DURATION_MILLISECONDS: 0**: The flow duration is zero, indicating that the connection was very short-lived. This could be a sign of a scanning or probing attempt rather than a legitimate connection.
+5. **SRC_TO_DST_SECOND_BYTES** and **DST_TO_SRC_SECOND_BYTES**: The byte rates (2432000 and 3312000) are unusually high for a single packet. This might indicate a data transfer or exfiltration activity.
+6. **NUM_PKTS_UP_TO_128_BYTES: 11**: There are 11 packets with sizes up to 128 bytes, which is an unusual distribution of packet sizes.
+
+Considering these features, the NetFlow sample appears to be malicious due to the following reasons:
+
+* Unusual FTP-related activity (L4_DST_PORT and FTP_COMMAND_RET_CODE)
+* Suspicious L7 protocol version
+* Anomalous TCP flags and flow duration
+* High byte rates and unusual packet size distribution
+
+These indicators suggest that this NetFlow sample might be related to a malicious activity, such as an FTP-based attack or data exfiltration. Further investigation is recommended to determine the nature of this activity and potential threats.

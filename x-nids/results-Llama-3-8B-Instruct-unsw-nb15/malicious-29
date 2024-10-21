@@ -1,0 +1,10 @@
+Based on the provided NetFlow data, this traffic is flagged as malicious because it exhibits characteristics of a known attack. Here's a breakdown of the features that indicate malicious activity:
+
+1. **Port 21**: The destination port (L4_DST_PORT) is set to 21, which is commonly used for FTP (File Transfer Protocol). This could be an indication of an FTP bruteforce attack or an attempt to exploit vulnerabilities in outdated FTP servers.
+2. **TCP Flags**: The TCP flags (TCP_FLAGS) are set to 16, indicating that the SYN flag is set. This suggests that the attacker is attempting to establish a connection with the target server using a TCP handshake.
+3. **Low-flow duration**: The flow duration is 0 milliseconds, which indicates that the connection was established and then quickly terminated. This behavior is unusual for legitimate FTP traffic, as it typically involves longer connections.
+4. **High packet counts**: The number of packets sent (IN_PKTS) and received (OUT_PKTS) is high (5), indicating a large amount of data being transferred in a short period. This could be an indication of an attack attempting to overwhelm the target server with traffic.
+5. **Unusual protocol usage**: The L7_PROTO value is set to 1.0, which corresponds to FTP. However, the PROTOCOL value (6) indicates that TCP is being used as the transport layer protocol instead of the typical FTP protocol over UDP or TCP (FTP-S or SFTP). This could be an indication of a man-in-the-middle attack or a custom implementation attempting to bypass security controls.
+6. **Retransmitted packets**: The number of retransmitted packets (RETRANSMITTED_IN_PKTS and RETRANSMITTED_OUT_PKTS) is high, which suggests that the connection was experiencing errors or congestion, further supporting the notion of an attack.
+
+Based on these features, it's likely that this traffic is malicious and warrants further investigation. The Network Intrusion Detection System has correctly flagged this traffic as suspicious due to its unusual behavior and potential exploitation of vulnerabilities in FTP servers.

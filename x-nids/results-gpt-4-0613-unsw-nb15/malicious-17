@@ -1,0 +1,19 @@
+The NetFlow data is flagged as malicious due to several suspicious feature values:
+
+1. **IN_BYTES vs OUT_BYTES**: The IN_BYTES value is 104, which means that 104 bytes of data were sent to the destination address. However, the OUT_BYTES value is 0, which means no data was sent back from the destination to the source. This is unusual and could indicate a one-way communication often associated with malicious activities like data exfiltration or command and control communication.
+
+2. **IN_PKTS vs OUT_PKTS**: Similar to the bytes, there are 2 packets sent from the source to the destination (IN_PKTS: 2), but no packets were sent back (OUT_PKTS: 0). This again suggests a one-way communication which is suspicious.
+
+3. **FLOW_DURATION_MILLISECONDS, DURATION_IN, DURATION_OUT**: All these values are 0, which means the flow duration was extremely short. This could indicate a quick, automated process, which is often a characteristic of malicious activities.
+
+4. **PROTOCOL: 17**: This indicates that the UDP protocol was used. UDP is a stateless protocol and does not require a handshake like TCP, making it a common choice for malicious activities as it's harder to track.
+
+5. **MIN_TTL and MAX_TTL**: Both are 254, which is unusually high. TTL (Time to Live) is decreased by at least 1 with each hop a packet makes. A high TTL could indicate an attempt to bypass network security measures, as some intrusion detection systems may ignore packets with high TTL values.
+
+6. **SRC_TO_DST_AVG_THROUGHPUT**: The average throughput from the source to the destination is 832000, which is quite high. This could indicate a large amount of data being sent in a short amount of time, which is often associated with data exfiltration.
+
+7. **TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS**: All these values are 0, which is unusual as TCP flags are typically used to establish and manage TCP connections. This could indicate the use of a non-standard or malicious TCP implementation.
+
+8. **L4_DST_PORT: 520**: This is the port for the Routing Information Protocol (RIP), which is an old protocol with known vulnerabilities. It could be an attempt to exploit these vulnerabilities.
+
+These suspicious feature values collectively suggest that the network flow could be associated with malicious activities.

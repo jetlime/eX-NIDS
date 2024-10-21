@@ -1,0 +1,19 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **L4_DST_PORT: 80**: This is the default port for HTTP traffic. Malicious actors often use this port to hide their activities in the normal web traffic.
+
+2. **PROTOCOL: 6**: This represents TCP protocol which is commonly used in many types of attacks due to its connection-oriented nature.
+
+3. **TCP_FLAGS: 27, CLIENT_TCP_FLAGS: 27, SERVER_TCP_FLAGS: 27**: The TCP flags field is set to 27, which is unusual. This value indicates that the SYN, FIN, and RST flags are all set, which is a rare combination and often associated with TCP-based attacks such as port scanning or TCP reset attack.
+
+4. **FLOW_DURATION_MILLISECONDS: 4294686**: The flow duration is quite long, which could indicate a long-term data exfiltration or a slow and low attack.
+
+5. **IN_BYTES: 3043, OUT_BYTES: 6015**: There is a significant difference between the incoming and outgoing bytes. This could indicate data exfiltration, where the attacker is sending out more data than they are receiving.
+
+6. **SRC_TO_DST_AVG_THROUGHPUT: 80000, DST_TO_SRC_AVG_THROUGHPUT: 168000**: The average throughput from source to destination is significantly lower than from destination to source, which again could indicate data exfiltration.
+
+7. **NUM_PKTS_UP_TO_128_BYTES: 40, NUM_PKTS_256_TO_512_BYTES: 5, NUM_PKTS_512_TO_1024_BYTES: 5**: The number of small packets is significantly higher than the number of larger packets. This could indicate a type of attack that uses small packets to avoid detection, such as a slow and low attack.
+
+8. **TCP_WIN_MAX_IN: 26883, TCP_WIN_MAX_OUT: 26847**: The maximum TCP window size for both incoming and outgoing traffic is quite high, which could indicate a TCP Window Size attack, where the attacker attempts to consume the victim's resources by sending packets with a large window size.
+
+These suspicious feature values, when combined, suggest that the network traffic could be malicious.

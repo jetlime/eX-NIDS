@@ -1,0 +1,36 @@
+The Network Intrusion Detection System (NIDS) has flagged the NetFlow data as malicious based on several indicators. Here’s a detailed analysis of why this particular flow is considered malicious:
+
+### 1. Source IP Address
+- **IPV4_SRC_ADDR: 18.219.5.43**
+  - This IP address originates from Hilliard, Ohio, United States, and has been recognized for involvement in DDoS attacks. This historical context alone raises suspicion.
+
+### 2. Unusual TCP Flags
+- **TCP_FLAGS: 223**
+  - The cumulative TCP flags value of 223 indicates an unusual combination of flags being set. This value corresponds to a combination of multiple flags (SYN, FIN, PSH, URG, and others), which is atypical for standard TCP communication and often associated with malicious activities such as scanning or attempts to bypass firewalls.
+
+### 3. High Throughput from Destination to Source
+- **DST_TO_SRC_AVG_THROUGHPUT: 9088000 bps**
+  - The average throughput from the destination to the source is extremely high (9,088,000 bps). This could indicate a large volume of data being sent back to the source, which is unusual for typical HTTP traffic and may suggest data exfiltration or a response to a command from a C&C server.
+
+### 4. Anomalous Packet Sizes
+- **LONGEST_FLOW_PKT: 1004 bytes**
+- **SHORTEST_FLOW_PKT: 40 bytes**
+  - The packet sizes vary significantly, with the longest packet being 1004 bytes and the shortest being 40 bytes. This variability can be indicative of non-standard communication patterns often seen in malicious activities.
+
+### 5. Persistent Connection
+- **FLOW_DURATION_MILLISECONDS: 4294935 ms (approximately 71.58 minutes)**
+  - The flow duration is unusually long, lasting over an hour. Such persistent connections can be indicative of an attacker maintaining access to a system or performing prolonged data exfiltration.
+
+### 6. High Number of Small Packets
+- **NUM_PKTS_UP_TO_128_BYTES: 8**
+  - A significant number of small packets (8 packets <= 128 bytes) can be indicative of reconnaissance activities or attempts to evade detection by breaking up data into smaller packets.
+
+### 7. Context of Previous Connections
+- Previous connections from IP addresses within the same range (18.219.x.x and 18.216.x.x) to the same destination IP (172.31.69.25) have been observed with similar patterns:
+  - Unusual TCP flags
+  - High throughput
+  - Persistent connections
+  - Recognized involvement in DDoS attacks
+
+### Conclusion
+The combination of the source IP's known malicious history, unusual TCP flags, high throughput from destination to source, significant variability in packet sizes, persistent connection duration, and the context of previous similar connections all point towards malicious activity. This NetFlow data exhibits several indicators of potential DDoS attacks, data exfiltration, or other forms of network intrusion, justifying its classification as malicious by the NIDS.

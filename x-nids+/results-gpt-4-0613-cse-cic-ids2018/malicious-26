@@ -1,0 +1,43 @@
+The flagged NetFlow data is considered malicious for several reasons, which can be identified by examining specific feature values and comparing them to typical indicators of malicious activity. Here is a detailed analysis:
+
+### 1. Source IP Address
+**IPV4_SRC_ADDR: 18.218.11.51**
+- **Known Malicious Source**: The source IP address 18.218.11.51 is known to be associated with phishing email sources. This historical context alone raises a red flag.
+
+### 2. Destination IP Address
+**IPV4_DST_ADDR: 172.31.69.28**
+- **Internal IP**: The destination IP is an internal address, which indicates that the source IP is trying to communicate with a device inside the network. This can be indicative of an attempt to compromise internal systems.
+
+### 3. Protocol and Ports
+**PROTOCOL: 6 (TCP), L7_PROTO: 7.0 (HTTP), L4_SRC_PORT: 51160, L4_DST_PORT: 80**
+- **HTTP Traffic on Non-Standard Source Port**: The use of HTTP protocol (Layer 7 protocol 7) over TCP (Protocol 6) with a non-standard source port (51160) while targeting the standard HTTP port (80) can be suspicious. This could be an attempt to bypass certain firewall rules or to obfuscate the nature of the traffic.
+
+### 4. Traffic Volume and Packet Characteristics
+**IN_BYTES: 503, OUT_BYTES: 1147, IN_PKTS: 5, OUT_PKTS: 5**
+- **Low Volume but Consistent Pattern**: The traffic volume is relatively low, which could be indicative of a "low-and-slow" attack strategy to avoid detection. The consistent pattern of 5 incoming and 5 outgoing packets also suggests automated or scripted behavior.
+
+### 5. Flow Duration
+**FLOW_DURATION_MILLISECONDS: 4294928**
+- **Unusually Long Duration**: The flow duration is extremely long (approximately 4294 seconds or over an hour). This is atypical for standard HTTP traffic, which usually involves shorter-lived connections. Persistent connections of this nature can indicate an attempt to maintain access to a system.
+
+### 6. TCP Flags
+**TCP_FLAGS: 219, CLIENT_TCP_FLAGS: 219, SERVER_TCP_FLAGS: 27**
+- **Unusual TCP Flag Combinations**: The cumulative TCP flags value of 219 (which includes SYN, FIN, and other flags) is unusual. This could indicate non-standard or suspicious behavior, such as scanning or probing.
+
+### 7. TTL Values
+**MIN_TTL: 127, MAX_TTL: 127**
+- **Consistent TTL**: The Time-To-Live (TTL) values are consistent, which might not be inherently suspicious but can be noteworthy when combined with other indicators.
+
+### 8. Packet Size Distribution
+**NUM_PKTS_UP_TO_128_BYTES: 8, NUM_PKTS_128_TO_256_BYTES: 0, NUM_PKTS_256_TO_512_BYTES: 1, NUM_PKTS_512_TO_1024_BYTES: 1**
+- **Small Packet Sizes**: The majority of the packets are small (up to 128 bytes), which can be indicative of reconnaissance activities or attempts to avoid detection by generating minimal traffic.
+
+### 9. Throughput
+**SRC_TO_DST_AVG_THROUGHPUT: 96000, DST_TO_SRC_AVG_THROUGHPUT: 232000**
+- **Moderate Throughput**: The average throughput values are moderate, which again aligns with the "low-and-slow" attack strategy.
+
+### 10. Comparison with Previous Connections
+- **Similar Patterns**: The flagged NetFlow entry shows similar patterns to previous connections involving different source IPs (18.218.115.60, 18.219.5.43, 18.219.9.1) but targeting the same internal IP (172.31.69.28). This repeated behavior from different sources targeting the same destination is indicative of coordinated malicious activity.
+
+### Conclusion
+The combination of a known malicious source IP, non-standard port usage, low volume but consistent traffic, unusually long flow duration, unusual TCP flag combinations, and repeated patterns from different source IPs targeting the same internal IP address all contribute to the conclusion that this NetFlow data is malicious. The characteristics align with several indicators of malicious activity, such as low-and-slow attacks, persistent connections, and potential reconnaissance or probing activities.

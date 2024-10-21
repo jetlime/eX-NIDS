@@ -1,0 +1,37 @@
+The flagged NetFlow data is considered malicious due to several suspicious characteristics that align with known indicators of malicious activity. Let's break down the specific features from the NetFlow sample and explain why they are problematic:
+
+### 1. **Source IP Address**
+- **IPV4_SRC_ADDR: 18.216.24.42**
+  - This IP address is known to be part of a DDoS botnet. Any traffic originating from this IP is inherently suspicious.
+
+### 2. **Traffic Volume and Duration**
+- **IN_BYTES: 524, OUT_BYTES: 1147**
+- **IN_PKTS: 5, OUT_PKTS: 5**
+- **FLOW_DURATION_MILLISECONDS: 4294964**
+  - The flow duration is extremely high (approximately 4294 seconds or about 71.5 minutes), which is unusual for typical HTTP traffic.
+  - Despite the long duration, the number of packets and bytes exchanged is relatively low, suggesting a low-and-slow attack pattern, which is a common tactic to avoid detection.
+
+### 3. **TCP Flags**
+- **TCP_FLAGS: 219 (0xDB)**
+  - The TCP flags value of 219 indicates a combination of flags that is not typical for normal HTTP traffic. Specifically, it includes the SYN, ACK, FIN, and URG flags, which is unusual and can indicate scanning or other malicious activities.
+- **CLIENT_TCP_FLAGS: 219, SERVER_TCP_FLAGS: 27**
+  - The client TCP flags match the overall TCP flags, reinforcing the suspicion of unusual behavior.
+
+### 4. **Throughput and Packet Size**
+- **SRC_TO_DST_AVG_THROUGHPUT: 1392000 bps, DST_TO_SRC_AVG_THROUGHPUT: 3056000 bps**
+  - The average throughput values are quite high, especially given the low number of packets and bytes. This discrepancy suggests irregular traffic patterns.
+- **LONGEST_FLOW_PKT: 975, SHORTEST_FLOW_PKT: 40**
+  - The significant difference between the longest and shortest packet sizes can indicate abnormal traffic, possibly related to command and control (C&C) communications or data exfiltration attempts.
+
+### 5. **TTL Values**
+- **MIN_TTL: 127, MAX_TTL: 127**
+  - The TTL values are consistent, which is normal, but in the context of other suspicious indicators, it does not mitigate the overall risk.
+
+### 6. **Historical Context**
+- The NetFlow data shows that there have been previous connections from different IP addresses (18.216.200.189, 18.219.9.1, and 52.14.136.135) to the same destination IP (172.31.69.28) on port 80, with similar suspicious characteristics:
+  - Similar TCP flags (219 for client, 27 for server).
+  - Similar flow durations and packet sizes.
+  - These repeated patterns suggest a coordinated effort, possibly part of a larger attack campaign.
+
+### Conclusion:
+The combination of a known malicious source IP, unusual TCP flags, high throughput with low packet count, and long flow duration with low traffic volume are strong indicators of malicious activity. The historical context of similar connections further supports the likelihood that this traffic is part of a coordinated attack, potentially involving DDoS or data exfiltration attempts. Therefore, the NetFlow data is rightly flagged as malicious.

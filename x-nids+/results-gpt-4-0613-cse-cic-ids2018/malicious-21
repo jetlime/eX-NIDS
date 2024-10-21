@@ -1,0 +1,34 @@
+The flagged NetFlow data is considered malicious due to several key indicators that deviate from normal network activity. Below is a detailed analysis of why this NetFlow entry is flagged as malicious, citing specific feature values:
+
+### Key Indicators of Malicious Activity:
+
+1. **Source IP Address (IPV4_SRC_ADDR)**:
+   - **Value**: 18.219.9.1
+   - **Reason**: This IP address originates from Hilliard, Ohio, United States, and has been known for being involved in multiple attack patterns. This historical context raises suspicion about any traffic originating from this IP.
+
+2. **Flow Duration (FLOW_DURATION_MILLISECONDS)**:
+   - **Value**: 4294963 milliseconds (approximately 71.6 minutes)
+   - **Reason**: This is an unusually long flow duration, which could indicate a persistent connection. Persistent connections are often used by attackers to maintain access to a system.
+
+3. **TCP Flags (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS)**:
+   - **Values**: TCP_FLAGS: 219, CLIENT_TCP_FLAGS: 219, SERVER_TCP_FLAGS: 27
+   - **Reason**: The combination of TCP flags is unusual. Specifically, the flags value of 219 (binary: 11011011) includes SYN, FIN, and RST, which are not typically seen together in normal traffic. This could indicate scanning or other malicious activities.
+
+4. **High Average Throughput (SRC_TO_DST_AVG_THROUGHPUT, DST_TO_SRC_AVG_THROUGHPUT)**:
+   - **Values**: SRC_TO_DST_AVG_THROUGHPUT: 1048000 bps, DST_TO_SRC_AVG_THROUGHPUT: 2288000 bps
+   - **Reason**: The high average throughput values suggest a significant amount of data being transferred, which could indicate data exfiltration.
+
+5. **Packet Sizes (LONGEST_FLOW_PKT, SHORTEST_FLOW_PKT, MIN_IP_PKT_LEN, MAX_IP_PKT_LEN)**:
+   - **Values**: LONGEST_FLOW_PKT: 975 bytes, SHORTEST_FLOW_PKT: 40 bytes, MIN_IP_PKT_LEN: 40 bytes, MAX_IP_PKT_LEN: 975 bytes
+   - **Reason**: The presence of both very small (40 bytes) and relatively large (975 bytes) packets within the same flow can be indicative of command and control (C&C) traffic or other types of malicious communication.
+
+6. **Consistent TTL Values (MIN_TTL, MAX_TTL)**:
+   - **Values**: MIN_TTL: 127, MAX_TTL: 127
+   - **Reason**: The consistent TTL values suggest that the packets are coming from the same source without much variation, which is common in automated or scripted attacks.
+
+7. **Historical Context of Similar Connections**:
+   - **Previous Connections**: There are three previous connections from different source IPs (18.218.229.235 and 52.14.136.135) to the same destination IP (172.31.69.28) with similar patterns.
+   - **Reason**: The repeated pattern of similar connections from different IPs targeting the same destination indicates a coordinated scanning or attack attempt.
+
+### Summary:
+The combination of an IP address with a known history of malicious activity, unusually long flow duration, suspicious TCP flags, high average throughput, anomalous packet sizes, consistent TTL values, and the historical context of similar connections all contribute to flagging this NetFlow data as malicious. These indicators suggest potential reconnaissance, data exfiltration, or command and control activities, warranting further investigation and appropriate defensive measures.

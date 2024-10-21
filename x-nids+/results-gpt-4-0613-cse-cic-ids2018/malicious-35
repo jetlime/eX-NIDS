@@ -1,0 +1,37 @@
+The flagged NetFlow data is considered malicious due to several suspicious characteristics that align with known indicators of malicious activity. Let's analyze the specific feature values from the provided NetFlow sample to understand why it has been flagged:
+
+### Key Indicators of Malicious Activity:
+
+1. **Source IP Address (IPV4_SRC_ADDR)**:
+   - **18.216.24.42**: This IP address is known to be part of a DDoS botnet and originates from Hilliard, Ohio, United States. The presence of this IP in the network traffic is a strong indicator of malicious intent.
+
+2. **Destination IP Address (IPV4_DST_ADDR)**:
+   - **172.31.69.28**: This is an internal IP address, indicating that the malicious traffic is targeting an internal system, potentially for reconnaissance, exploitation, or data exfiltration.
+
+3. **Protocol (PROTOCOL) and Layer 7 Protocol (L7_PROTO)**:
+   - **PROTOCOL: 6**: This corresponds to TCP, a standard transport protocol.
+   - **L7_PROTO: 7.0**: This corresponds to HTTP, which is commonly used for web traffic. The use of HTTP in this context could be an attempt to blend in with normal web traffic to avoid detection.
+
+4. **Flow Duration (FLOW_DURATION_MILLISECONDS)**:
+   - **4294964 milliseconds**: This unusually long flow duration suggests a persistent connection, which is often associated with malicious activities such as maintaining access to a compromised system.
+
+5. **TCP Flags (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS)**:
+   - **TCP_FLAGS: 219 (0xDB)**: This combination of flags includes SYN, ACK, and FIN, which can indicate abnormal or suspicious TCP behavior.
+   - **CLIENT_TCP_FLAGS: 219 (0xDB)**: Same as above, indicating the client is initiating or participating in suspicious TCP behavior.
+   - **SERVER_TCP_FLAGS: 27 (0x1B)**: This includes SYN, ACK, and FIN flags from the server side, further indicating unusual TCP activity.
+
+6. **Traffic Volume and Packet Counts**:
+   - **IN_BYTES: 485, OUT_BYTES: 1147**: The volume of incoming and outgoing data is relatively low, which could indicate a low-and-slow attack approach to avoid detection.
+   - **IN_PKTS: 5, OUT_PKTS: 5**: The number of packets is also low, supporting the low-and-slow attack hypothesis.
+
+7. **Throughput**:
+   - **SRC_TO_DST_AVG_THROUGHPUT: 1288000 bps, DST_TO_SRC_AVG_THROUGHPUT: 3056000 bps**: The high throughput values, despite the low volume of data and packets, suggest an abnormal traffic pattern.
+
+8. **Packet Sizes**:
+   - **LONGEST_FLOW_PKT: 975 bytes, SHORTEST_FLOW_PKT: 40 bytes**: The range of packet sizes is typical for HTTP traffic, but in combination with other factors, it can be indicative of an attempt to mimic normal traffic patterns.
+
+9. **Previous Connections**:
+   - The previous connections involving the same internal destination IP (172.31.69.28) and different external IPs (18.219.5.43, 52.14.136.135, and 18.216.24.42) suggest a pattern of repeated attempts to communicate with the internal system. This pattern is consistent with reconnaissance or a coordinated attack.
+
+### Conclusion:
+The NetFlow data is flagged as malicious primarily due to the involvement of a known malicious IP address (18.216.24.42), the targeting of an internal IP address (172.31.69.28), and the presence of suspicious TCP flags and flow duration. The combination of these factors, along with the context of previous similar connections, strongly indicates malicious activity, likely related to a DDoS botnet or other forms of cyber attack.

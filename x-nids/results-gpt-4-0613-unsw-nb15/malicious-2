@@ -1,0 +1,19 @@
+The NetFlow data is considered malicious due to several reasons:
+
+1. **Destination Port (L4_DST_PORT):** The destination port is 25, which is typically used for SMTP (Simple Mail Transfer Protocol). This could indicate an attempt to send spam or perform other malicious activities.
+
+2. **Protocol (PROTOCOL):** The protocol used is 6, which corresponds to TCP. TCP is often used in attacks due to its reliable delivery, which can be exploited for malicious purposes.
+
+3. **TCP Flags (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS):** The TCP flags are set to 19, which corresponds to SYN and FIN flags being set. This is unusual because these flags are typically not set in the same TCP segment. This could indicate a type of scan or attack, such as a stealth scan or a TCP FIN scan.
+
+4. **Flow Duration (FLOW_DURATION_MILLISECONDS):** The flow duration is quite long (4294951 milliseconds), which could indicate a long-lasting connection used for data exfiltration or maintaining a persistent threat.
+
+5. **Retransmitted Packets and Bytes (RETRANSMITTED_IN_BYTES, RETRANSMITTED_IN_PKTS, RETRANSMITTED_OUT_BYTES, RETRANSMITTED_OUT_PKTS):** There are retransmitted packets and bytes in both directions. This could indicate network issues, but in the context of other suspicious indicators, it could also suggest malicious activities like attempts to establish a connection or transfer data despite network defenses.
+
+6. **TCP Window Size (TCP_WIN_MAX_IN, TCP_WIN_MAX_OUT):** The maximum TCP window size for both inbound and outbound connections is 16383, which is quite high. This could be an attempt to overwhelm the target system or network, leading to a Denial of Service (DoS) attack.
+
+7. **TTL Values (MIN_TTL, MAX_TTL):** The minimum and maximum TTL values are 254 and 255 respectively. This could suggest that the source and destination are very close in terms of network hops, or it could indicate TTL evasion techniques used to bypass network security measures.
+
+8. **ICMP Type (ICMP_TYPE):** The ICMP type is 36864, which is not a valid ICMP type. This could indicate an attempt to use a malformed or spoofed ICMP packet for malicious purposes.
+
+These indicators collectively suggest that the network traffic is likely to be malicious.

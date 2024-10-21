@@ -1,0 +1,21 @@
+This NetFlow data is considered malicious due to several suspicious characteristics that indicate potentially harmful behavior. Here are the specific feature values that support this analysis:
+
+1. **IPV4_SRC_ADDR: 175.45.176.1** - The source IP address is from an unknown or suspicious location, which could be indicative of malicious intent.
+
+2. **L4_SRC_PORT: 0** - The source port is set to 0, which is unusual as most legitimate traffic would use a specific port number.
+
+3. **IPV4_DST_ADDR: 149.171.126.10** - The destination IP address is also not a common or recognized address.
+
+4. **L4_DST_PORT: 0** - Similar to the source port, the destination port being set to 0 is abnormal.
+
+5. **PROTOCOL: 135** - The protocol value of 135 corresponds to Microsoft EPMAP (End Point Mapper), which is commonly associated with Windows RPC services and can be exploited by attackers.
+
+6. **MIN_TTL: 254, MAX_TTL: 254** - The Time-to-Live (TTL) values are set to the maximum, which can be an attempt to evade detection or hide the origin of the traffic.
+
+7. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0** - The flow duration values being set to 0 indicate a very short-lived connection, which is often seen in malicious activities to avoid detection.
+
+8. **SRC_TO_DST_AVG_THROUGHPUT: 1600000** - The high average throughput value is unusual for a seemingly benign connection and could indicate a potential DDoS attack or data exfiltration.
+
+9. **NUM_PKTS_UP_TO_128_BYTES: 2** - The number of packets within a specific size range can be an indicator of certain types of attacks, such as reconnaissance or scanning.
+
+Based on these feature values, the NetFlow data is flagged as malicious due to the combination of suspicious IP addresses, unusual port settings, protocol type, TTL values, short flow duration, and potentially high throughput, which collectively suggest malicious intent or behavior.

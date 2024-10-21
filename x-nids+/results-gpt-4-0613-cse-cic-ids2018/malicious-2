@@ -1,0 +1,37 @@
+The flagged NetFlow data is considered malicious for several reasons, which can be identified by examining specific feature values and comparing them to typical patterns of malicious activity. Here is a detailed analysis:
+
+### 1. Source IP Address
+**IPV4_SRC_ADDR: 18.219.193.20**
+- This IP address originates from Hilliard, Ohio, United States, and has been previously associated with SSH brute-force activity. This historical context raises suspicion about the current traffic originating from this IP.
+
+### 2. High Traffic Volume and Persistent Connection
+**FLOW_DURATION_MILLISECONDS: 4294795**
+- The flow duration is exceptionally long (approximately 71.5 minutes). Persistent connections of this length can indicate an attempt to maintain access to a system, which is a common tactic in malicious activities.
+
+**IN_BYTES: 2582, OUT_BYTES: 4812**
+- The total volume of data exchanged (7394 bytes) is notable, especially given the long duration of the connection. This could indicate data exfiltration or a command-and-control (C&C) session.
+
+### 3. Anomalous Packet Sizes
+**LONGEST_FLOW_PKT: 987, SHORTEST_FLOW_PKT: 52**
+- The variation in packet sizes, with the longest packet being 987 bytes and the shortest being 52 bytes, might indicate an attempt to evade detection by mimicking normal traffic patterns or using various payload sizes.
+
+### 4. TCP Flags
+**TCP_FLAGS: 27, CLIENT_TCP_FLAGS: 27, SERVER_TCP_FLAGS: 27**
+- The TCP flags value of 27 (binary 11011) indicates the presence of SYN, ACK, FIN, and PSH flags. This combination is unusual and may suggest scanning or other malicious activities. The presence of the FIN flag, in particular, can indicate the termination of a connection, which might be part of a reconnaissance or scanning effort.
+
+### 5. Unusual Throughput and Packet Distribution
+**SRC_TO_DST_AVG_THROUGHPUT: 112000, DST_TO_SRC_AVG_THROUGHPUT: 216000**
+- The average throughput values are relatively high, suggesting significant data transfer rates. This could be indicative of data exfiltration or a high-volume attack.
+
+**NUM_PKTS_UP_TO_128_BYTES: 34, NUM_PKTS_128_TO_256_BYTES: 0, NUM_PKTS_256_TO_512_BYTES: 4, NUM_PKTS_512_TO_1024_BYTES: 4**
+- The majority of packets are small (up to 128 bytes), which can be characteristic of command-and-control traffic or data exfiltration attempts that aim to avoid detection by sending small amounts of data at a time.
+
+### 6. Connection Context
+**PROTOCOL: 6, L7_PROTO: 7.0**
+- The protocol used is TCP, and the application layer protocol is HTTP. While HTTP traffic is common, the context of the source IP and the other indicators suggest that this might be an attempt to blend malicious traffic with normal web traffic.
+
+### 7. Historical Context of Related Connections
+- The previous connections involving different source IPs (18.218.229.235, 13.58.98.64, 18.219.9.1) to the same destination IP (172.31.69.25) indicate a pattern of scanning or probing for vulnerabilities. The repeated attempts to connect to port 80 (HTTP) and port 22 (SSH) further support the hypothesis of reconnaissance or brute-force attacks.
+
+### Conclusion
+The combination of a known malicious source IP, long flow duration, high traffic volume, unusual packet sizes and TCP flags, and the context of related connections all point towards this NetFlow data being indicative of malicious activity. The pattern suggests an ongoing attempt to maintain access to the internal IP (172.31.69.25), possibly for data exfiltration or command-and-control purposes.

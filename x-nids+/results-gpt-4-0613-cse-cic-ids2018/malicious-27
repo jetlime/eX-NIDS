@@ -1,0 +1,43 @@
+The flagged NetFlow data is considered malicious due to several suspicious characteristics that align with known patterns of malicious activity. Let's break down the specific features from the NetFlow sample and explain why they are indicative of malicious behavior:
+
+### 1. Source IP Address
+- **IPV4_SRC_ADDR: 18.219.5.43**
+  - This IP address is recognized for involvement in Distributed Denial of Service (DDoS) attacks. The history of malicious activity associated with this IP address is a significant red flag.
+
+### 2. Unusual Traffic Patterns
+- **FLOW_DURATION_MILLISECONDS: 4294964**
+  - The flow duration is unusually long, close to the maximum value for a 32-bit unsigned integer (4294967295 milliseconds), which suggests an anomaly. Such long durations can indicate persistent connections, often used by attackers to maintain access to a system.
+
+- **DURATION_IN: 2**, **DURATION_OUT: 2**
+  - The extremely short client-to-server and server-to-client stream durations are inconsistent with the overall flow duration. This discrepancy is unusual and could indicate abnormal behavior, such as automated scripts or scanning tools.
+
+### 3. High Throughput
+- **SRC_TO_DST_AVG_THROUGHPUT: 1360000 bps**, **DST_TO_SRC_AVG_THROUGHPUT: 3056000 bps**
+  - The high average throughput values suggest a significant amount of data being transferred in a short period. This could indicate data exfiltration or a high-volume attack.
+
+### 4. Consistent Packet Sizes
+- **NUM_PKTS_UP_TO_128_BYTES: 8**
+  - The majority of packets are small (up to 128 bytes), which is typical for scanning activities or automated tools that send minimal data to probe for vulnerabilities.
+
+- **LONGEST_FLOW_PKT: 975 bytes**, **SHORTEST_FLOW_PKT: 40 bytes**
+  - The range between the longest and shortest packet sizes is relatively wide, but the consistency in the number of small packets is more telling of scanning or probing behavior.
+
+### 5. TCP Flags
+- **TCP_FLAGS: 219 (0xDB in hex)**
+  - The combination of TCP flags (SYN, FIN, and URG) is unusual. Normal TCP connections typically have SYN and ACK flags for connection establishment and FIN for termination. The presence of the URG flag is uncommon and can indicate an attempt to bypass firewalls or intrusion detection systems.
+
+- **CLIENT_TCP_FLAGS: 219**, **SERVER_TCP_FLAGS: 27**
+  - The client TCP flags match the overall TCP flags, reinforcing the suspicion that the client (source IP) is initiating unusual connections. The server TCP flags are also unusual, with a value of 27 (0x1B in hex), indicating SYN, ACK, and FIN, which is not typical for standard HTTP traffic.
+
+### 6. Port and Protocol Usage
+- **L4_SRC_PORT: 61832**, **L4_DST_PORT: 80**
+  - The use of a high, ephemeral source port (61832) to connect to a well-known HTTP port (80) is typical, but when combined with other factors, it suggests potential malicious activity targeting web services.
+
+- **PROTOCOL: 6 (TCP)**, **L7_PROTO: 7.0 (HTTP)**
+  - The use of TCP and HTTP is standard for web traffic, but the context of the source IP and the nature of the traffic make this suspicious.
+
+### 7. Previous Connections
+- The previous connections involving the same destination IP (172.31.69.28) and similar patterns of traffic from different source IPs (18.218.115.60, 18.219.5.43, 18.216.200.189) suggest coordinated scanning or attack attempts. The consistency in the number of packets, bytes, and TCP flags across these connections further supports this hypothesis.
+
+### Conclusion
+The combination of a known malicious source IP address, unusual flow duration, high throughput, consistent small packet sizes, unusual TCP flags, and the context of previous similar connections all point towards this NetFlow data being indicative of malicious activity. The patterns observed align with behaviors typical of scanning, probing, or potential data exfiltration attempts. Therefore, the Network Intrusion Detection System's flagging of this NetFlow data as malicious is well-founded.

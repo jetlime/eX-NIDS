@@ -1,0 +1,62 @@
+The provided NetFlow data has been flagged as malicious by the Network Intrusion Detection System (NIDS). Let's analyze the specific features and values present in the NetFlow sample to understand why it is considered malicious.
+
+### Malicious NetFlow Analysis:
+
+- **IPV4_SRC_ADDR: 13.58.98.64**
+  - This IP address originates from Hilliard, Ohio, United States, and is known for spam email activity. This historical reputation adds to the suspicion.
+
+- **IPV4_DST_ADDR: 172.31.69.25**
+  - This is an internal IP address, indicating that the malicious activity is targeting an internal resource.
+
+- **L4_SRC_PORT: 41246**
+  - Source port used by the attacker.
+
+- **L4_DST_PORT: 22**
+  - Destination port 22, which is used for SSH (Secure Shell) protocol. SSH is commonly targeted for unauthorized remote access attempts.
+
+- **PROTOCOL: 6**
+  - Indicates the use of TCP (Transmission Control Protocol).
+
+- **L7_PROTO: 92.0**
+  - Corresponds to the SSH protocol, confirming that the traffic is SSH-related.
+
+- **IN_BYTES: 3180, OUT_BYTES: 3869**
+  - The amount of data transferred in both directions. The presence of data transfer suggests an active session, possibly an unauthorized access attempt.
+
+- **IN_PKTS: 23, OUT_PKTS: 23**
+  - The number of packets sent and received. This indicates a bidirectional communication.
+
+- **TCP_FLAGS: 27, CLIENT_TCP_FLAGS: 27, SERVER_TCP_FLAGS: 27**
+  - TCP flags value 27 (binary 11011) corresponds to a combination of SYN, ACK, and FIN flags. This is unusual as it suggests the connection is being established, acknowledged, and terminated rapidly, which is not typical for normal SSH sessions.
+
+- **FLOW_DURATION_MILLISECONDS: 0**
+  - A flow duration of 0 milliseconds is highly unusual and suggests that the connection was extremely short-lived, possibly indicating a scanning or brute-force attempt.
+
+- **MIN_TTL: 63, MAX_TTL: 63**
+  - The Time-To-Live (TTL) values are consistent, suggesting that the packets are originating from the same source without much variation in routing paths.
+
+- **LONGEST_FLOW_PKT: 1028, SHORTEST_FLOW_PKT: 52**
+  - The packet sizes vary significantly, with the longest packet being 1028 bytes and the shortest being 52 bytes. This variation can be indicative of different types of payloads being sent, possibly command and control instructions or data exfiltration.
+
+- **SRC_TO_DST_SECOND_BYTES: 3180.0, DST_TO_SRC_SECOND_BYTES: 3869.0**
+  - The rate of data transfer per second. These values indicate active data exchange, which is unusual for such a short connection duration.
+
+- **RETRANSMITTED_IN_BYTES: 0, RETRANSMITTED_IN_PKTS: 0, RETRANSMITTED_OUT_BYTES: 0, RETRANSMITTED_OUT_PKTS: 0**
+  - No retransmissions, suggesting that the packets were successfully delivered without the need for retries.
+
+- **SRC_TO_DST_AVG_THROUGHPUT: 25440000, DST_TO_SRC_AVG_THROUGHPUT: 30952000**
+  - High average throughput values, indicating a significant amount of data being transferred in a very short time.
+
+- **NUM_PKTS_UP_TO_128_BYTES: 35, NUM_PKTS_128_TO_256_BYTES: 7, NUM_PKTS_256_TO_512_BYTES: 1, NUM_PKTS_512_TO_1024_BYTES: 2, NUM_PKTS_1024_TO_1514_BYTES: 1**
+  - The distribution of packet sizes shows a higher number of small packets, which can be indicative of probing or scanning behavior.
+
+### Conclusion:
+The NetFlow data is considered malicious due to several factors:
+1. **Reputation of Source IP**: The source IP 13.58.98.64 is known for spam activity.
+2. **Targeting SSH Port**: The destination port is 22, used for SSH, a common target for unauthorized access attempts.
+3. **Unusual TCP Flags**: The combination of SYN, ACK, and FIN flags in such a short duration is indicative of scanning or brute-force attempts.
+4. **Flow Duration**: A flow duration of 0 milliseconds is highly unusual and suggests rapid connection attempts, possibly for reconnaissance.
+5. **High Throughput**: Significant data transfer rates in a very short time frame.
+6. **Packet Size Distribution**: A higher number of small packets, which can be indicative of probing or scanning behavior.
+
+These factors collectively suggest that the traffic is not consistent with normal network activity and is likely part of a malicious attempt to gain unauthorized access or perform reconnaissance on the internal network.

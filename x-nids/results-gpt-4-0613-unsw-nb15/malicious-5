@@ -1,0 +1,17 @@
+The NetFlow data is flagged as malicious due to several suspicious feature values that indicate potential malicious activity. Here's a breakdown of the suspicious features:
+
+1. **L4_DST_PORT: 21**: This is the port for FTP (File Transfer Protocol), which is often used for data exfiltration or command and control communication by malicious actors.
+
+2. **PROTOCOL: 6**: This represents TCP, a protocol often used in malicious activities due to its reliable data delivery.
+
+3. **TCP_FLAGS: 24, CLIENT_TCP_FLAGS: 24, SERVER_TCP_FLAGS: 16**: These flags indicate unusual TCP behavior. The value 24 for TCP_FLAGS and CLIENT_TCP_FLAGS suggests that the Push (PSH) and Acknowledgement (ACK) flags are set, which is common in data exfiltration or command and control communication. The SERVER_TCP_FLAGS value of 16 indicates only the Acknowledgement (ACK) flag is set, which is unusual and could indicate a one-sided communication or data transfer.
+
+4. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These values indicate that the flow duration is extremely short, which is unusual and could suggest an automated process or script, often used in malicious activities.
+
+5. **RETRANSMITTED_IN_BYTES: 306, RETRANSMITTED_IN_PKTS: 5, RETRANSMITTED_OUT_BYTES: 372, RETRANSMITTED_OUT_PKTS: 5**: These high retransmission rates suggest network congestion, packet loss, or potentially malicious activity such as a Denial of Service (DoS) attack.
+
+6. **SRC_TO_DST_AVG_THROUGHPUT: 4888000, DST_TO_SRC_AVG_THROUGHPUT: 6392000**: These high throughput values could indicate a large amount of data being transferred at a high speed, which is common in data exfiltration.
+
+7. **FTP_COMMAND_RET_CODE: 150**: This FTP return code means that the file status is okay and the server is about to open a new connection for data transfer. This could be an indication of data exfiltration.
+
+These features together suggest that the network traffic could be part of a malicious activity such as a DoS attack, command and control communication, or data exfiltration.

@@ -1,0 +1,14 @@
+The Network Intrusion Detection System has flagged this NetFlow data as malicious due to several indicators that suggest suspicious activity. Here's a breakdown of the feature values that support this analysis:
+
+1. **Source IP**: The source IP address (18.219.193.20) originates from Hilliard, Ohio, United States, and has been known for SSH brute-force activity observed in the past. This raises concerns about the legitimacy of the traffic.
+2. **Protocol**: The protocol used is TCP (protocol 6), which is a common protocol, but the combination with the L7 protocol (HTTP, numeric value 7) suggests that this traffic may be related to Web-based activities.
+3. **Destination IP**: The destination IP address (172.31.69.25) is an internal IP address, which implies that the traffic is attempting to access a system within the network.
+
+Malicious indicators:
+
+1. **High TCP flags value**: The TCP flags value of 27 indicates an unusual combination of flags, which may be indicative of scanning or other malicious activities.
+2. **Retransmitted packets**: There are retransmitted packets (RETRANSMITTED_IN_BYTES: 431 and RETRANSMITTED_IN_PKTS: 1), which could indicate failed connection attempts or brute-force attacks.
+3. **Unusual packet sizes**: The longest flow packet size is 987 bytes, while the shortest flow packet size is 52 bytes. This deviation in average packet size may be an anomaly.
+4. **High throughput**: The source-to-destination average throughput (SRC_TO_DST_AVG_THROUGHPUT: 104000) and destination-to-source average throughput (DST_TO_SRC_AVG_THROUGHPUT: 184000) are unusually high, which could indicate data exfiltration attempts.
+
+Given these feature values, the Network Intrusion Detection System has flagged this NetFlow data as malicious due to the combination of suspicious indicators, including the source IP address with a history of SSH brute-force activity, unusual protocol and packet characteristics, and high throughput.

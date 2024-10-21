@@ -1,0 +1,34 @@
+The flagged NetFlow data is considered malicious due to several key indicators that deviate from normal network activity, suggesting potential reconnaissance or attack behavior. Here’s a detailed analysis citing specific feature values:
+
+### Source IP Address
+- **IPV4_SRC_ADDR: 18.219.193.20**
+  - This IP address originates from Hilliard, Ohio, United States, and has been known for SSH brute-force activity. The historical context of this IP being involved in malicious activities raises a red flag.
+
+### High Traffic Volume and Persistent Connections
+- **IN_BYTES: 3043, OUT_BYTES: 6015**
+  - A significant amount of data is being transferred, which could indicate data exfiltration or other malicious activities.
+- **FLOW_DURATION_MILLISECONDS: 4294686**
+  - The flow duration is unusually long (approximately 4294 seconds or 71 minutes), suggesting a persistent connection that deviates from typical short-lived HTTP connections.
+
+### Anomalous Packet Size
+- **LONGEST_FLOW_PKT: 987, SHORTEST_FLOW_PKT: 52**
+  - The variation in packet sizes could indicate abnormal behavior. Typically, HTTP traffic has more consistent packet sizes.
+- **NUM_PKTS_UP_TO_128_BYTES: 40**
+  - A high number of small packets can be indicative of scanning or probing activities, which are common in reconnaissance phases of an attack.
+
+### Unusual Packet Flags
+- **TCP_FLAGS: 27, CLIENT_TCP_FLAGS: 27, SERVER_TCP_FLAGS: 27**
+  - The combination of TCP flags (27 in decimal, which translates to flags SYN, FIN, and PSH being set) is unusual and can indicate scanning or other non-standard behavior.
+
+### High Number of Packets and Throughput
+- **IN_PKTS: 25, OUT_PKTS: 25**
+  - A high number of packets in both directions within a single flow can indicate an active session that is not typical for benign HTTP traffic.
+- **SRC_TO_DST_AVG_THROUGHPUT: 80000, DST_TO_SRC_AVG_THROUGHPUT: 168000**
+  - The average throughput values are relatively high, which could indicate a data transfer operation, possibly for exfiltration.
+
+### Consistency with Previous Malicious Connections
+- **Preceding Connections:**
+  - Previous connections from the same source IP address (18.219.193.20) to the same destination IP address (172.31.69.25) on port 80 have been observed with similar patterns of behavior, reinforcing the likelihood of malicious intent.
+
+### Summary
+The combination of a known malicious source IP, significant data transfer, long flow duration, unusual packet sizes, and atypical TCP flags collectively contribute to the classification of this NetFlow data as malicious. These indicators suggest that the traffic could be part of a reconnaissance, data exfiltration, or another type of attack.

@@ -1,0 +1,17 @@
+The NetFlow data provided is flagged as malicious due to several suspicious characteristics:
+
+1. **Unidirectional Traffic**: The IN_BYTES and IN_PKTS values are 1874 and 2 respectively, indicating that data is being sent from the source to the destination. However, the OUT_BYTES and OUT_PKTS values are both 0, showing that no data is being sent back from the destination to the source. This unidirectional traffic is a common characteristic of a Denial of Service (DoS) attack or a network scan.
+
+2. **UDP Traffic on Port 1900**: The PROTOCOL value is 17, which corresponds to UDP, and the L4_DST_PORT is 1900. This is the port typically used by the Simple Service Discovery Protocol (SSDP), which can be exploited for DDoS attacks.
+
+3. **Short Flow Duration**: The FLOW_DURATION_MILLISECONDS, DURATION_IN, and DURATION_OUT values are all 0, indicating that the flow duration is extremely short. This is another characteristic of a DoS attack, where the attacker rapidly sends a large number of packets to overwhelm the target system.
+
+4. **Large Packet Size**: The LONGEST_FLOW_PKT, SHORTEST_FLOW_PKT, and MAX_IP_PKT_LEN values are all 937, which is relatively large for a single packet. Large packets can be used in amplification attacks to consume more network resources and cause disruption.
+
+5. **High Source to Destination Throughput**: The SRC_TO_DST_AVG_THROUGHPUT value is 14992000, which is quite high. This could indicate that the source is trying to overwhelm the destination with a large amount of data in a short period of time.
+
+6. **Zero Retransmitted Packets**: The RETRANSMITTED_IN_BYTES, RETRANSMITTED_IN_PKTS, RETRANSMITTED_OUT_BYTES, and RETRANSMITTED_OUT_PKTS values are all 0. This is unusual for normal network traffic, where some amount of packet retransmission is expected due to network errors.
+
+7. **High TTL Value**: The MIN_TTL and MAX_TTL values are both 254, which is very close to the maximum possible value of 255. This could indicate that the source is trying to ensure that its packets reach the destination, even if they have to pass through many routers. This is another characteristic of a DoS attack.
+
+These features together suggest that the source IP address (175.45.176.1) is conducting a DoS attack against the destination IP address (149.171.126.15).

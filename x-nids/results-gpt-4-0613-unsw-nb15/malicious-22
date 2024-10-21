@@ -1,0 +1,21 @@
+The NetFlow data is considered malicious due to several suspicious feature values:
+
+1. **IPV4_SRC_ADDR: 175.45.176.0**: This source IP address could be associated with known malicious activity. It's important to cross-reference this with threat intelligence data.
+
+2. **L4_DST_PORT: 514**: This destination port is typically used for Syslog, a standard for message logging. An unusual amount of traffic to this port could indicate an attempt to exploit a vulnerability or perform a Denial of Service (DoS) attack.
+
+3. **PROTOCOL: 17 & L7_PROTO: 17.0**: These indicate that the User Datagram Protocol (UDP) is being used. UDP is a common protocol for DoS attacks due to its connectionless nature.
+
+4. **IN_BYTES: 2008, IN_PKTS: 2, OUT_BYTES: 0, OUT_PKTS: 0**: This shows that data is being sent to the destination but no data is being returned. This is a common characteristic of a one-way attack or scan.
+
+5. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These values indicate that the flow duration is extremely short, which is unusual and could suggest an attempt to quickly probe or attack the system.
+
+6. **MIN_TTL: 254, MAX_TTL: 254**: These high Time To Live (TTL) values could indicate that the source is trying to ensure that its packets do not expire before reaching their destination, which is a common characteristic of certain types of network attacks.
+
+7. **LONGEST_FLOW_PKT: 1004, SHORTEST_FLOW_PKT: 1004, MAX_IP_PKT_LEN: 1004**: These values suggest that all packets are the same size, which is unusual and could indicate a flood attack.
+
+8. **SRC_TO_DST_SECOND_BYTES: 2008.0, DST_TO_SRC_SECOND_BYTES: 0.0**: This again shows that data is being sent to the destination but no data is being returned, reinforcing the suspicion of a one-way attack or scan.
+
+9. **SRC_TO_DST_AVG_THROUGHPUT: 16064000, DST_TO_SRC_AVG_THROUGHPUT: 0**: The high average throughput from source to destination, with no return throughput, could indicate a flood attack.
+
+These suspicious feature values collectively suggest that the network traffic could be part of a DoS attack, a scan, or another type of malicious activity.

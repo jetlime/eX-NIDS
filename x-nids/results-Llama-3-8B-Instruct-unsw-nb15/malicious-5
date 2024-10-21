@@ -1,0 +1,15 @@
+Based on the provided NetFlow data, I have analyzed the features to determine why it is considered malicious.
+
+The main reason this flow is flagged as malicious is due to its characteristics of a typical FTP (File Transfer Protocol) connection, specifically an unauthorized file transfer from a compromised internal host to an external server. Here's a breakdown of the features that support this conclusion:
+
+1. **L4_DEST_PORT**: The destination port is 21, which is the standard port for FTP.
+2. **PROTOCOL**: The protocol used is TCP (6), which is commonly used for file transfers like FTP.
+3. **L7_PROTO**: The Layer 7 protocol is 1.0, which indicates that this flow is likely an FTP connection.
+4. **IN_BYTES** and **OUT_BYTES**: The total bytes transferred in and out are significant (701 IN and 885 OUT), indicating a large file transfer.
+5. **TCP_FLAGS**: The TCP flags indicate that the connection was established using an active OPEN command (0x24) on both the client and server sides, which is typical for FTP connections.
+6. **NUM_PKTS_UP_TO_128_BYTES**: The number of packets with lengths up to 128 bytes is relatively high (32), indicating a large amount of data being transferred.
+7. **SRC_TO_DST_AVG_THROUGHPUT** and **DST_TO_SRC_AVG_THROUGHPUT**: These features indicate that the throughput of the connection is unusually high, which could be indicative of a file transfer.
+
+While this flow may not be inherently malicious in nature, it could be an indication of unauthorized data exfiltration or malware activity. The Network Intrusion Detection System (NIDS) has flagged this flow due to its unusual characteristics and potential security implications.
+
+Please note that without additional context or information about the network environment and security policies in place, it's difficult to determine the exact malicious intent behind this flow. Further investigation is required to confirm whether this flow is indeed malicious and to take appropriate action to prevent future occurrences.

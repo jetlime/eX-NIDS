@@ -1,0 +1,19 @@
+The NetFlow data is considered malicious due to several reasons:
+
+1. **Destination Port (L4_DST_PORT: 53)**: The destination port is 53, which is typically used for DNS (Domain Name System) queries. This could indicate a DNS tunneling attack, where data is covertly sent over DNS protocols to bypass firewalls.
+
+2. **Protocol (PROTOCOL: 17)**: The protocol used is 17, which corresponds to UDP (User Datagram Protocol). UDP is a stateless protocol often used in DNS queries and responses. It can be exploited in DNS tunneling or amplification attacks.
+
+3. **Flow Duration (FLOW_DURATION_MILLISECONDS: 0)**: The flow duration is 0 milliseconds, which is unusual. This could indicate a fast, automated process, such as a bot or malware, rather than human activity.
+
+4. **Packet Size (MIN_IP_PKT_LEN: 69, MAX_IP_PKT_LEN: 85)**: The minimum and maximum IP packet lengths are 69 and 85 bytes, respectively. These small packet sizes could be indicative of a covert channel, where data is hidden within seemingly normal network traffic.
+
+5. **DNS Query Type (DNS_QUERY_TYPE: 1)**: The DNS query type is 1, which corresponds to an A record request. This is used to map a hostname to an IP address. Malicious actors often use these requests in DNS tunneling attacks.
+
+6. **DNS TTL Answer (DNS_TTL_ANSWER: 1)**: The DNS TTL (Time to Live) answer is 1, which is very low. This could indicate a fast flux DNS attack, where the attacker rapidly changes the IP address associated with a domain name to evade detection.
+
+7. **High Throughput (SRC_TO_DST_AVG_THROUGHPUT: 1104000, DST_TO_SRC_AVG_THROUGHPUT: 1016000)**: The average throughput from source to destination and vice versa is unusually high, which could indicate a large amount of data being transferred quickly. This could be a sign of data exfiltration.
+
+8. **Number of Packets (NUM_PKTS_UP_TO_128_BYTES: 4)**: All packets are up to 128 bytes in size, which is small and could indicate a covert channel or evasion technique.
+
+These features collectively suggest that the network traffic could be part of a DNS tunneling attack or similar malicious activity.

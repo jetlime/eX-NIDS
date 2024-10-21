@@ -1,0 +1,15 @@
+The NetFlow data is flagged as malicious due to several suspicious feature values:
+
+1. **Flow Duration:** The flow duration is 0 milliseconds, which is highly unusual. This could indicate a system error, or it could suggest that the source is attempting to flood the destination with packets in a very short amount of time, a common characteristic of a Denial of Service (DoS) attack.
+
+2. **TCP Flags:** The TCP flags value is 27, which corresponds to the combination of SYN, FIN, and ACK flags. This is a highly unusual combination, as SYN and FIN flags are typically not set in the same TCP segment. This could indicate an attempt to perform a stealthy port scan or a TCP/IP stack fingerprinting attempt.
+
+3. **High Throughput:** The average throughput from the source to the destination (SRC_TO_DST_AVG_THROUGHPUT) and from the destination to the source (DST_TO_SRC_AVG_THROUGHPUT) are both very high. This could indicate a large amount of data being transferred in a short amount of time, which is another characteristic of a DoS attack or data exfiltration attempt.
+
+4. **Packet Lengths:** The longest flow packet (LONGEST_FLOW_PKT) and the maximum IP packet length (MAX_IP_PKT_LEN) are both unusually large. This could indicate an attempt to perform fragmentation attacks, where large packets are used to overwhelm the target system or evade detection.
+
+5. **TCP Window Size:** The maximum TCP window size for both incoming (TCP_WIN_MAX_IN) and outgoing (TCP_WIN_MAX_OUT) traffic is quite high. This could indicate an attempt to perform a TCP Window Size DoS attack, where the attacker manipulates the window size to disrupt the target's ability to manage its TCP connections.
+
+6. **Port 80:** The destination port is 80, which is typically used for HTTP traffic. If the traffic is not HTTP, this could indicate an attempt to hide malicious traffic within normal web traffic.
+
+These features together suggest that the source IP is likely conducting some form of malicious activity against the destination IP.

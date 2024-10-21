@@ -1,0 +1,19 @@
+The NetFlow data is flagged as malicious due to several suspicious characteristics:
+
+1. **High Flow Duration**: The FLOW_DURATION_MILLISECONDS is 4294795, which is approximately 71 minutes. This unusually long duration could indicate a slow data exfiltration attempt or a long-term connection for command and control communication.
+
+2. **Unusual TCP Flags**: The TCP_FLAGS, CLIENT_TCP_FLAGS, and SERVER_TCP_FLAGS are all 27. This is unusual because it indicates that the SYN, FIN, and RST flags are all set. This is not a typical flag combination for normal TCP communication and could indicate an attempt to bypass firewall rules or perform a stealthy scan.
+
+3. **High Data Transfer Rate**: The SRC_TO_DST_SECOND_BYTES and DST_TO_SRC_SECOND_BYTES are 1151104.0 and 13151091.0 respectively. This high data transfer rate could indicate data exfiltration or a DoS attack.
+
+4. **Unusual Packet Sizes**: The LONGEST_FLOW_PKT is 987 bytes and the SHORTEST_FLOW_PKT is 52 bytes. The MIN_IP_PKT_LEN is also 52 bytes and the MAX_IP_PKT_LEN is 987 bytes. These unusual packet sizes could indicate an attempt to avoid detection by blending in with normal traffic or to exploit specific vulnerabilities that require certain packet sizes.
+
+5. **High Number of Small Packets**: The NUM_PKTS_UP_TO_128_BYTES is 16, which is relatively high. This could indicate a scan or DoS attack.
+
+6. **Port 80**: The L4_DST_PORT is 80, which is typically used for HTTP traffic. Malicious actors often use this port because it is usually open for web traffic.
+
+7. **Unusual Throughput**: The SRC_TO_DST_AVG_THROUGHPUT and DST_TO_SRC_AVG_THROUGHPUT are 56000 and 64000 respectively. This could indicate a high volume of data being transferred, which could be a sign of data exfiltration.
+
+8. **Unusual TTL Values**: The MIN_TTL and MAX_TTL are both 63. This is unusual because TTL values typically vary more in normal traffic. This could indicate an attempt to avoid detection by making the traffic appear more uniform.
+
+These features together make the NetFlow data appear malicious.

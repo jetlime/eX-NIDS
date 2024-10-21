@@ -1,0 +1,31 @@
+The flagged NetFlow data is considered malicious due to several key indicators that align with common patterns of malicious activity:
+
+### Indicators of Malicious Activity:
+
+1. **Source IP Address (18.219.32.43):**
+   - This IP address has been previously associated with DDoS attacks. The repeated appearance of this IP address in the network traffic is a significant red flag.
+
+2. **High TCP Flags Value (219):**
+   - The TCP flags value of 219 indicates a combination of SYN, ACK, and FIN flags. This unusual combination can be indicative of scanning or probing activities, which are common in reconnaissance phases of attacks.
+
+3. **Flow Duration (4294937 milliseconds):**
+   - The flow duration is exceedingly long (approximately 4294 seconds or 71 minutes), which is abnormal for typical HTTP traffic. Persistent connections of this length can indicate attempts to maintain access or perform prolonged data exfiltration.
+
+4. **Consistent Traffic Patterns:**
+   - The traffic pattern (5 incoming packets, 5 outgoing packets) is consistent across multiple connections involving the same source IP. This could indicate automated or scripted activity rather than normal user behavior.
+
+5. **High Number of Small Packets:**
+   - The majority of packets are small (NUM_PKTS_UP_TO_128_BYTES: 8), which can be indicative of scanning or probing activities where the attacker sends small packets to gather information about the target.
+
+6. **Unusual Throughput Values:**
+   - The average throughput values (SRC_TO_DST_AVG_THROUGHPUT: 144000 bps, DST_TO_SRC_AVG_THROUGHPUT: 304000 bps) are relatively low for HTTP traffic, which might suggest low-and-slow data exfiltration attempts designed to evade detection.
+
+7. **Repetitive Connection Attempts:**
+   - The source IP has made multiple connection attempts to the destination IP on port 80 (HTTP) with different source ports (52957, 58630, 59083). This repetitive behavior is characteristic of scanning or brute-force attacks.
+
+8. **Internal Destination IP (172.31.69.28):**
+   - The destination IP is an internal IP address. External connections to internal IPs, especially from known malicious sources, are suspicious and warrant further investigation.
+
+### Summary:
+
+The combination of a known malicious source IP address, unusual TCP flag combinations, prolonged connection durations, repetitive and consistent traffic patterns, and connections to an internal IP address all contribute to the classification of this NetFlow data as malicious. These indicators suggest that the activity may be part of a reconnaissance, scanning, or low-and-slow data exfiltration attempt, which are common tactics used by attackers to gain information about the network or to exfiltrate data without being detected.

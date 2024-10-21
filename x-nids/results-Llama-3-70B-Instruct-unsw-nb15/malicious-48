@@ -1,0 +1,11 @@
+The malicious NetFlow data is flagged due to several suspicious features that indicate a potential FTP exploit or scan. Here's a breakdown of the key feature values that support this analysis:
+
+1. **L4_DST_PORT: 21**: The destination port 21 is associated with FTP (File Transfer Protocol). While FTP is a legitimate protocol, the presence of other suspicious features in this NetFlow data suggests malicious activity.
+2. **PROTOCOL: 6**: The protocol value of 6 indicates that the traffic is using TCP (Transmission Control Protocol), which is commonly used for FTP connections.
+3. **TCP_FLAGS: 16**: The TCP flags value of 16 indicates that the packet has the ACK (acknowledgment) flag set, which is unusual for an initial connection attempt. This could be a sign of an FTP exploit or scan attempting to bypass security measures.
+4. **CLIENT_TCP_FLAGS: 16** and **SERVER_TCP_FLAGS: 0**: The client and server TCP flags values suggest that the client is sending ACK packets without waiting for a response from the server, which is unusual behavior.
+5. **IN_BYTES: 9** and **OUT_BYTES: 74**: The large disparity between incoming and outgoing bytes (9 vs. 74) may indicate an FTP exploit or scan attempting to send data to the target system.
+6. **FTP_COMMAND_RET_CODE: 331.0**: The FTP command return code of 331.0 is a common response from an FTP server indicating that the user has successfully logged in. However, in this context, it may suggest that the malicious actor is attempting to exploit an FTP vulnerability or scan for open FTP ports.
+7. **SRC_TO_DST_SECOND_BYTES: 304.0** and **DST_TO_SRC_SECOND_BYTES: 310.0**: The high values of bytes per second in both directions (304.0 and 310.0) may indicate a burst of traffic, which is unusual for legitimate FTP connections.
+
+Considering these features, it's likely that the NetFlow data represents an FTP exploit or scan attempt, rather than legitimate FTP activity.

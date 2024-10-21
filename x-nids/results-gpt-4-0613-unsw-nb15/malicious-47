@@ -1,0 +1,17 @@
+The NetFlow data flagged as malicious by the Network Intrusion Detection System (NIDS) can be analyzed based on several suspicious features:
+
+1. **IPV4_SRC_ADDR: 175.45.176.3, L4_SRC_PORT: 7812, IPV4_DST_ADDR: 149.171.126.15, L4_DST_PORT: 514**: The source IP address and port are communicating with the destination IP address on port 514. Port 514 is typically used for Syslog services, which are used for message logging. Unauthorized access or attempts to send data to this port could indicate an attempt to exploit vulnerabilities or send malicious data.
+
+2. **PROTOCOL: 17, L7_PROTO: 17.0**: This indicates that the protocol used is UDP (User Datagram Protocol), which is a stateless protocol. UDP is often used in DoS (Denial of Service) attacks as it does not require a connection to be established and can easily be spoofed.
+
+3. **IN_BYTES: 438, IN_PKTS: 2, OUT_BYTES: 0, OUT_PKTS: 0**: This shows that data is being sent to the destination but no data is being returned. This is unusual as most legitimate communications would expect some form of response.
+
+4. **FLOW_DURATION_MILLISECONDS: 0, DURATION_IN: 0, DURATION_OUT: 0**: These values indicate that the flow duration is extremely short, which is typical of a network scan or similar type of attack where the attacker does not want to maintain a connection.
+
+5. **MIN_TTL: 254, MAX_TTL: 254**: The TTL (Time to Live) values are at their maximum, which could indicate an attempt to ensure that the packets reach their destination regardless of the number of hops they have to make. This could be indicative of a network scan or a DoS attack.
+
+6. **SRC_TO_DST_SECOND_BYTES: 438.0, DST_TO_SRC_SECOND_BYTES: 0.0**: This again shows that data is being sent to the destination but no data is being returned, reinforcing the suspicion of a one-way communication, which is unusual.
+
+7. **SRC_TO_DST_AVG_THROUGHPUT: 3504000, DST_TO_SRC_AVG_THROUGHPUT: 0**: The average throughput from source to destination is significantly high, while the throughput from destination to source is zero. This could indicate a flood attack, where the attacker is trying to overwhelm the target with a large amount of data.
+
+These features collectively suggest that the flagged NetFlow data is likely part of a malicious activity, possibly a network scanning or flood attack.

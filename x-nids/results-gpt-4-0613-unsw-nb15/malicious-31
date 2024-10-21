@@ -1,0 +1,15 @@
+The NetFlow data is considered malicious due to several suspicious indicators:
+
+1. **Unidirectional Traffic**: The IN_BYTES is 956 and IN_PKTS is 2, indicating that data is being sent from the source to the destination. However, the OUT_BYTES and OUT_PKTS are both 0, which means no data is being sent back from the destination to the source. This unidirectional traffic is unusual and could indicate a one-way communication often associated with malicious activities such as data exfiltration or command and control communication.
+
+2. **Short Flow Duration**: The FLOW_DURATION_MILLISECONDS is 0, which means the connection was very short-lived. This could indicate a quick, automated process such as a bot or malware.
+
+3. **High Source to Destination Throughput**: The SRC_TO_DST_AVG_THROUGHPUT is 7648000, which is significantly higher than the DST_TO_SRC_AVG_THROUGHPUT of 0. This discrepancy suggests an abnormal data transfer rate from the source to the destination, which could be a sign of a data breach or a denial-of-service attack.
+
+4. **Destination Port**: The L4_DST_PORT is 514, which is typically used for Syslog services. Unauthorized access or attempts to send data to this port could indicate an attempt to exploit vulnerabilities or perform reconnaissance on system logs.
+
+5. **Protocol Mismatch**: The PROTOCOL and L7_PROTO are both 17, which corresponds to UDP. However, there are several TCP related fields (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS) present in the NetFlow data. This could indicate an attempt to use a different protocol to bypass security measures.
+
+6. **TTL Values**: The MIN_TTL and MAX_TTL are both 254. TTL (Time to Live) values are decreased by at least 1 with each hop in a network. A high TTL value could indicate that the source and destination are very close in terms of network hops, which is unusual for internet traffic and could suggest IP spoofing.
+
+These features collectively suggest that the flagged NetFlow data is potentially malicious.

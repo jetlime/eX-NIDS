@@ -1,0 +1,42 @@
+The flagged NetFlow data is considered malicious due to several key indicators that align with common patterns of malicious network activity. Here is a detailed analysis:
+
+### Indicators of Malicious Activity:
+
+1. **Known Malicious Destination IP**:
+   - **Destination IP**: `18.219.211.138`
+     - This IP address is known for SSH brute-force attacks, which is a significant red flag. Communication with known malicious IPs is a strong indicator of potentially harmful activities.
+
+2. **Repetitive Connections**:
+   - The NetFlow data shows multiple connections to the same destination IP (`18.219.211.138`) from different internal source IPs (`172.31.69.14`, `172.31.69.10`, `172.31.69.17`), all targeting the same destination port (`8080`). This pattern is typical of coordinated or automated attacks, such as a botnet or a scanning activity.
+
+3. **Unusual Traffic Patterns**:
+   - **Flow Duration**: `0 milliseconds`
+     - The flow duration being zero is unusual and can indicate an attempt to quickly probe or scan the target without establishing a proper connection.
+   - **TCP Flags**: `219` (SYN, ACK, FIN, RST)
+     - The combination of TCP flags suggests irregular connection attempts. The presence of multiple flags like SYN, ACK, FIN, and RST in a single flow can indicate scanning or probing behavior.
+
+4. **Consistent Packet Sizes**:
+   - **Longest Flow Packet**: `366 bytes`
+   - **Shortest Flow Packet**: `40 bytes`
+     - The packet sizes are consistent across multiple connections, which can indicate automated tools generating these packets. Automated tools often use standard packet sizes.
+
+5. **High Throughput**:
+   - **Src to Dst Avg Throughput**: `4304000 bps`
+   - **Dst to Src Avg Throughput**: `2728000 bps`
+     - High throughput rates in a short duration can indicate an attempt to quickly transfer data or probe the target aggressively.
+
+6. **High Number of Small Packets**:
+   - **Num Pkts Up to 128 Bytes**: `8`
+   - **Num Pkts 128 to 256 Bytes**: `1`
+   - **Num Pkts 256 to 512 Bytes**: `1`
+     - The majority of packets are small in size, which is common in scanning or probing activities where the attacker is trying to gather information without sending large amounts of data.
+
+### Summary:
+The flagged NetFlow data is considered malicious due to the following reasons:
+- Communication with a known malicious IP address associated with SSH brute-force attacks.
+- Multiple connections from different internal IPs to the same external IP and port, indicating coordinated or automated activity.
+- Unusual traffic patterns with zero flow duration and irregular TCP flags.
+- Consistent packet sizes and high throughput in a short duration, suggesting automated probing or scanning.
+- High number of small packets, which is typical of reconnaissance activities.
+
+These indicators collectively suggest that the traffic is likely part of a malicious activity such as scanning, probing, or an attempt to establish a connection with a command and control server.

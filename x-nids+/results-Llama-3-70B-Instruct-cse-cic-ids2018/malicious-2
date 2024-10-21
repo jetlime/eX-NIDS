@@ -1,0 +1,21 @@
+The Network Intrusion Detection System has flagged this NetFlow data as malicious based on several indicators. Here's an explanation of why it is considered malicious, citing specific feature values present in the NetFlow sample to support our analysis:
+
+1. **Source IP**: The source IP address (18.219.193.20) originates from Hilliard, Ohio, United States, and has been known for SSH brute-force activity observed. This suggests that the traffic may be related to malicious activities.
+
+2. **Protocol**: The protocol used is TCP (Layer 4), which is a common protocol used for web traffic. However, the combination of this protocol with other feature values raises suspicions.
+
+3. **L7 Protocol**: The L7 protocol (7.0) corresponds to HTTP, which is a common protocol used for web traffic. This, in conjunction with the TCP protocol, suggests that the traffic may be related to web-based activities.
+
+4. **Flow Duration**: The flow duration (4294795 milliseconds) indicates a long-lasting connection, which deviates from normal session durations. This could indicate an attacker maintaining access to a system.
+
+5. **TCP Flags**: The TCP flags (27) suggest unusual combinations of flags, indicative of scanning or other malicious activities.
+
+6. **Client and Server TCP Flags**: The client and server TCP flags (both 27) also suggest unusual combinations of flags, further supporting the notion of malicious activity.
+
+7. **Outbound Data Transfers**: The outbound data transfer (4812 bytes) is relatively large compared to the inbound data transfer (2582 bytes). This could indicate data exfiltration attempts.
+
+8. **Packet Size Distribution**: The packet size distribution (MIN_IP_PKT_LEN: 52, MAX_IP_PKT_LEN: 987) shows a wide range of packet sizes, which may indicate anomalous packet sizes.
+
+9. **Throughput**: The average throughput (SRC_TO_DST_AVG_THROUGHPUT: 112000, DST_TO_SRC_AVG_THROUGHPUT: 216000) is relatively high, suggesting a significant amount of data being transferred.
+
+Considering these feature values, the NetFlow data is considered malicious due to its suspicious combination of protocol usage, long-lasting connection, unusual TCP flags, large outbound data transfers, and anomalous packet sizes. This traffic may be related to data exfiltration, command and control (C&C) activities, or other types of malicious activity.

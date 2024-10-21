@@ -1,0 +1,8 @@
+The NetFlow data is considered malicious due to the following features:
+
+1. **Uncommon protocol usage**: The L7 protocol (244) corresponds to DNP3, which is an IoT-Scada protocol. This is unusual for internal network traffic, and its presence may indicate a potential IoT-related attack or unauthorized access.
+2. **Anomalous packet size**: The LONGEST_FLOW_PKT (44) and SHORTEST_FLOW_PKT (40) values are unusually small. This deviation in average packet size could be indicative of malicious activity, such as scanning or data exfiltration attempts.
+3. **Unusual TCP flags**: The TCP_FLAGS value (22) is unusual, and the combination of CLIENT_TCP_FLAGS (2) and SERVER_TCP_FLAGS (20) may indicate port scanning activities or other malicious behaviors.
+4. **High throughput**: The SRC_TO_DST_AVG_THROUGHPUT (352000) and DST_TO_SRC_AVG_THROUGHPUT (320000) values are relatively high, which could be indicative of data exfiltration attempts or unauthorized data transfers.
+
+Given these features, the NetFlow data is considered malicious because it exhibits unusual protocol usage, packet sizes, and TCP flags, as well as high throughput. These indicators may suggest a potential IoT-related attack, data exfiltration attempt, or other malicious activity on the internal network.

@@ -1,0 +1,67 @@
+The flagged NetFlow data is considered malicious due to several key indicators that deviate from normal network activity. Let's break down the specific feature values present in the NetFlow sample and explain why they are suspicious:
+
+### Malicious NetFlow Sample:
+- **IPV4_SRC_ADDR:** 18.221.219.4
+- **L4_SRC_PORT:** 33582
+- **IPV4_DST_ADDR:** 172.31.69.25
+- **L4_DST_PORT:** 21
+- **PROTOCOL:** 6 (TCP)
+- **L7_PROTO:** 1.0 (FTP_CONTROL)
+- **IN_BYTES:** 780
+- **IN_PKTS:** 13
+- **OUT_BYTES:** 520
+- **OUT_PKTS:** 13
+- **TCP_FLAGS:** 22
+- **CLIENT_TCP_FLAGS:** 2
+- **SERVER_TCP_FLAGS:** 20
+- **FLOW_DURATION_MILLISECONDS:** 4294763
+- **DURATION_IN:** 204
+- **DURATION_OUT:** 204
+- **MIN_TTL:** 63
+- **MAX_TTL:** 63
+- **LONGEST_FLOW_PKT:** 60
+- **SHORTEST_FLOW_PKT:** 40
+- **MIN_IP_PKT_LEN:** 40
+- **MAX_IP_PKT_LEN:** 60
+- **SRC_TO_DST_SECOND_BYTES:** 780.0
+- **DST_TO_SRC_SECOND_BYTES:** 520.0
+- **RETRANSMITTED_IN_BYTES:** 0
+- **RETRANSMITTED_IN_PKTS:** 0
+- **RETRANSMITTED_OUT_BYTES:** 0
+- **RETRANSMITTED_OUT_PKTS:** 0
+- **SRC_TO_DST_AVG_THROUGHPUT:** 24000
+- **DST_TO_SRC_AVG_THROUGHPUT:** 16000
+- **NUM_PKTS_UP_TO_128_BYTES:** 26
+- **NUM_PKTS_128_TO_256_BYTES:** 0
+- **NUM_PKTS_256_TO_512_BYTES:** 0
+- **NUM_PKTS_512_TO_1024_BYTES:** 0
+- **NUM_PKTS_1024_TO_1514_BYTES:** 0
+- **TCP_WIN_MAX_IN:** 26883
+- **TCP_WIN_MAX_OUT:** 0
+
+### Indicators of Malicious Activity:
+
+1. **Source IP Reputation:**
+   - **IPV4_SRC_ADDR:** 18.221.219.4 is known for malicious activity linked to malware distribution. This alone raises a red flag as it indicates a history of malicious behavior.
+
+2. **Unusual Protocol and Port Usage:**
+   - **L4_DST_PORT:** 21 (FTP) is typically used for file transfers. While not inherently malicious, the combination of this port with the known malicious source IP is suspicious.
+   - **L7_PROTO:** 1.0 (FTP_CONTROL) further confirms the use of FTP, which is often targeted for unauthorized data transfers.
+
+3. **Traffic Volume and Duration:**
+   - **FLOW_DURATION_MILLISECONDS:** 4294763 milliseconds (~71.5 minutes) is an unusually long duration for an FTP control session, which typically should be short-lived.
+   - **IN_BYTES:** 780 and **OUT_BYTES:** 520, while not extremely high, indicate a steady exchange of data over an extended period, which could be indicative of data exfiltration or command and control communication.
+
+4. **Packet Characteristics:**
+   - **LONGEST_FLOW_PKT:** 60 bytes and **SHORTEST_FLOW_PKT:** 40 bytes indicate that the packets are unusually small. This could be a sign of a low-and-slow attack, where the attacker is trying to avoid detection by sending small amounts of data over a long period.
+   - **NUM_PKTS_UP_TO_128_BYTES:** 26 packets all fall within the smallest packet size category, supporting the low-and-slow hypothesis.
+
+5. **TCP Flags:**
+   - **TCP_FLAGS:** 22 (SYN and ACK flags) indicates that the connection was established but not much data was transferred, which is unusual for a legitimate FTP session.
+   - **CLIENT_TCP_FLAGS:** 2 (SYN) and **SERVER_TCP_FLAGS:** 20 (ACK) show that the client initiated the connection and the server acknowledged it, but the connection did not progress much beyond the handshake.
+
+6. **TTL Values:**
+   - **MIN_TTL:** 63 and **MAX_TTL:** 63 are consistent, suggesting that the packets are coming from the same source, which aligns with the known malicious IP.
+
+### Conclusion:
+The combination of a known malicious source IP, unusual FTP control traffic over an extended period, small packet sizes, and specific TCP flag patterns strongly suggest that this NetFlow is part of a malicious activity. The long duration and steady data exchange could indicate data exfiltration or command and control communication, making it necessary to investigate further and potentially block the source IP to prevent any further malicious activity.

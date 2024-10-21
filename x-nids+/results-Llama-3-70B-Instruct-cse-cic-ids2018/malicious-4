@@ -1,0 +1,8 @@
+The NetFlow data is considered malicious due to the following features:
+
+1. **Unexpected Protocol**: The L7 protocol (Application protocol) is 0, which corresponds to an Unknown protocol. This is unusual and may indicate a custom or proprietary protocol being used for malicious purposes.
+2. **Uncommon Port Number**: The destination port number (L4_DST_PORT) is 53, which is not a commonly used port number for UDP traffic. This could be an indication of port scanning or an attempt to communicate with a specific service on the destination host.
+3. **Small Packet Size**: The packet sizes are unusually small, with IN_PKTS and OUT_PKTS both being 1, and MIN_IP_PKT_LEN and MAX_IP_PKT_LEN being 73 and 89 bytes respectively. This could be an indication of a reconnaissance or scanning activity.
+4. **High Throughput**: The SRC_TO_DST_AVG_THROUGHPUT and DST_TO_SRC_AVG_THROUGHPUT values are unusually high (584000 and 712000 bps respectively), which may indicate a data exfiltration attempt or a malicious data transfer.
+
+The combination of these features, particularly the unexpected protocol and small packet size, suggests that this NetFlow data may be related to malicious activity, such as reconnaissance or data exfiltration.

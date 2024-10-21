@@ -1,0 +1,37 @@
+The flagged NetFlow data is considered malicious due to several suspicious characteristics that align with known indicators of malicious activity. Let's analyze the specific feature values from the provided NetFlow sample to understand why it has been flagged:
+
+### Key Indicators of Malicious Activity:
+
+1. **Source IP Address (IPV4_SRC_ADDR)**:
+   - **18.219.193.20**: This IP address is known for SSH brute-force activity. The repeated connections from this IP address to the internal IP address (172.31.69.25) on port 80 (HTTP) are suspicious, especially given its known malicious history.
+
+2. **Destination IP Address (IPV4_DST_ADDR)**:
+   - **172.31.69.25**: This is an internal IP address, indicating that the malicious activity is targeting a machine within the internal network.
+
+3. **Protocol (PROTOCOL)**:
+   - **6 (TCP)**: The use of TCP is standard for HTTP traffic (L7_PROTO: 7.0), but the context is important here.
+
+4. **Traffic Volume and Patterns**:
+   - **IN_BYTES: 2855, OUT_BYTES: 4812**: The volume of data being transferred is notable but not excessively high. However, the pattern of data transfer and the fact that there are retransmitted bytes (431 bytes) suggest potential issues.
+   - **IN_PKTS: 22, OUT_PKTS: 20**: The number of packets is relatively low, which could indicate a stealthy communication attempt.
+
+5. **Flow Duration (FLOW_DURATION_MILLISECONDS)**:
+   - **4294763 milliseconds (~71.5 minutes)**: The duration of the flow is unusually long for typical HTTP traffic, which might indicate a persistent connection. This is often seen in command and control (C&C) traffic where the attacker maintains a long-lasting connection to the compromised host.
+
+6. **TCP Flags (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS)**:
+   - **27 (SYN, FIN, PSH)**: The combination of SYN, FIN, and PSH flags is unusual and can be indicative of scanning or other non-standard TCP behaviors.
+
+7. **Retransmitted Bytes and Packets**:
+   - **RETRANSMITTED_IN_BYTES: 431, RETRANSMITTED_IN_PKTS: 1**: The presence of retransmitted bytes and packets suggests potential network issues or deliberate attempts to ensure data delivery, which could be part of an attack strategy.
+
+8. **TTL Values (MIN_TTL, MAX_TTL)**:
+   - **MIN_TTL: 63, MAX_TTL: 63**: Consistent TTL values can sometimes indicate a controlled environment or scripted activity, which is common in automated attacks.
+
+9. **ICMP Type and Code (ICMP_TYPE, ICMP_IPV4_TYPE)**:
+   - **ICMP_TYPE: 44800, ICMP_IPV4_TYPE: 175**: These values are unusual and not typically seen in standard HTTP traffic. ICMP traffic with these types and codes could be indicative of network reconnaissance or other probing activities.
+
+10. **Historical Context**:
+    - The previous connections from the same source IP (18.219.193.20) to the same destination IP (172.31.69.25) on port 80 show a pattern of repeated attempts to establish communication. This repeated behavior is consistent with brute-force or scanning activities.
+
+### Conclusion:
+The combination of the known malicious source IP, the unusual TCP flag combination, the long flow duration, the presence of retransmitted bytes, and the unusual ICMP types and codes all contribute to the suspicion that this NetFlow data represents malicious activity. The historical context of repeated connections from a known malicious IP further supports this conclusion. Therefore, the flagged NetFlow data is considered malicious due to these multiple indicators of potentially harmful behavior.

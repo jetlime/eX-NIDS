@@ -1,0 +1,31 @@
+The flagged NetFlow data is considered malicious due to several indicators that deviate from normal network activity. Here are the specific features and their values that support this analysis:
+
+1. **Source IP Address**:
+   - **IPV4_SRC_ADDR: 18.219.193.20**: This IP address is known for SSH brute-force activity. This historical context raises suspicion about any traffic originating from this IP.
+
+2. **High Throughput and Data Transfer**:
+   - **SRC_TO_DST_SECOND_BYTES: 11,171,824.0**: A very high rate of data transfer from the source to the destination.
+   - **DST_TO_SRC_SECOND_BYTES: 13,153,497.0**: Similarly, a high rate of data transfer in the reverse direction.
+   - **SRC_TO_DST_AVG_THROUGHPUT: 120,000 bps** and **DST_TO_SRC_AVG_THROUGHPUT: 160,000 bps**: These high throughput values suggest a significant amount of data being exchanged, which is unusual for typical HTTP traffic.
+
+3. **Retransmissions**:
+   - **RETRANSMITTED_IN_BYTES: 398** and **RETRANSMITTED_IN_PKTS: 1**: The presence of retransmitted bytes and packets indicates potential issues with the connection, which could be a sign of malicious activity trying to ensure data delivery.
+
+4. **Consistent Use of TCP Flags**:
+   - **TCP_FLAGS: 27, CLIENT_TCP_FLAGS: 27, SERVER_TCP_FLAGS: 27**: The consistent use of TCP flags across multiple connections suggests a pattern that could be indicative of automated or scripted activity, such as a brute-force attack or scanning.
+
+5. **Flow Duration**:
+   - **FLOW_DURATION_MILLISECONDS: 4,294,764**: This extremely long flow duration (over 4 million milliseconds) is abnormal for typical HTTP connections, which are usually much shorter. This could indicate a persistent connection, potentially for maintaining access or exfiltrating data.
+
+6. **Packet Sizes**:
+   - **NUM_PKTS_UP_TO_128_BYTES: 33**: A large number of small packets can be indicative of reconnaissance or data exfiltration attempts.
+   - **NUM_PKTS_256_TO_512_BYTES: 5** and **NUM_PKTS_512_TO_1024_BYTES: 4**: The presence of packets in these size ranges, combined with the high number of small packets, suggests non-standard traffic patterns.
+
+7. **TTL Values**:
+   - **MIN_TTL: 63, MAX_TTL: 63**: The consistent TTL values indicate that the packets are likely coming from the same source without much variation in the path, which is typical in controlled or scripted attacks.
+
+8. **Historical Context**:
+   - The source IP (18.219.193.20) has been previously observed in SSH brute-force activities, which adds to the suspicion of its current traffic being malicious.
+
+### Conclusion:
+The combination of high data transfer rates, long flow duration, consistent and unusual TCP flags, retransmissions, and the historical context of the source IP address all contribute to the determination that this NetFlow data is malicious. These indicators align with behaviors commonly associated with data exfiltration, persistent connections, and potentially automated attacks.

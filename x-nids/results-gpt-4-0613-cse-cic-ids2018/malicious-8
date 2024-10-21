@@ -1,0 +1,19 @@
+The NetFlow data is considered malicious due to several reasons:
+
+1. Destination Port (L4_DST_PORT): The destination port is 21, which is typically used for FTP (File Transfer Protocol). FTP is often exploited by attackers to upload malicious files or exfiltrate data.
+
+2. Protocol (PROTOCOL): The protocol used is 6, which corresponds to TCP. TCP is a connection-oriented protocol, and many attacks exploit vulnerabilities in the TCP protocol stack.
+
+3. TCP Flags (TCP_FLAGS, CLIENT_TCP_FLAGS, SERVER_TCP_FLAGS): The TCP flags indicate the type of control signals used in the TCP connection. In this case, the flags are 22, 2, and 20 respectively. The flag 22 (SYN and ACK) is typically used to establish a TCP connection, but it can also be used in certain types of attacks like SYN flood attacks. The flag 2 (SYN) is used to initiate a TCP connection and can be used in SYN flood attacks. The flag 20 (ACK) is used to acknowledge the receipt of a packet and can be used in ACK flood attacks.
+
+4. Flow Duration (FLOW_DURATION_MILLISECONDS): The flow duration is quite long (4294763 milliseconds or about 1.2 hours). Long-lasting connections can be a sign of data exfiltration or a persistent backdoor.
+
+5. Packet Length (MIN_IP_PKT_LEN, MAX_IP_PKT_LEN): The minimum and maximum IP packet lengths are 40 and 60 bytes respectively. These are very small packet sizes, which could indicate an attempt to avoid detection by splitting malicious data into smaller packets.
+
+6. Throughput (SRC_TO_DST_AVG_THROUGHPUT, DST_TO_SRC_AVG_THROUGHPUT): The average throughput from source to destination is 24000 bytes/second, and from destination to source is 16000 bytes/second. High throughput can be a sign of a data exfiltration attempt.
+
+7. TCP Window Size (TCP_WIN_MAX_IN, TCP_WIN_MAX_OUT): The maximum incoming TCP window size is 26883, but the maximum outgoing TCP window size is 0. A zero window size can indicate a denial of service (DoS) attack.
+
+8. Number of Packets (NUM_PKTS_UP_TO_128_BYTES): There are 26 packets of size up to 128 bytes. A large number of small packets can be a sign of a DoS attack or an attempt to avoid detection.
+
+These are just some of the reasons why the Network Intrusion Detection System might have flagged this NetFlow data as malicious. Further investigation would be needed to confirm the nature of the activity.

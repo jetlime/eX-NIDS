@@ -1,0 +1,29 @@
+The flagged NetFlow data indicates potential malicious activity for several reasons, based on the analysis of specific feature values and the context provided:
+
+### 1. **Unusual Protocol Usage (L7_PROTO: 244)**
+- **Layer 7 Protocol 244** corresponds to the DNP3 protocol, which is typically used in SCADA (Supervisory Control and Data Acquisition) systems for industrial control systems (ICS). This protocol is not commonly used in typical IT environments and its presence could suggest unauthorized access or manipulation of ICS devices.
+  
+### 2. **Internal IP Communication**
+- **Source IP (172.31.69.13)** and **Destination IP (172.31.69.15)** are both internal IP addresses. While internal communication is normal, the use of DNP3 protocol between these addresses is unusual unless explicitly expected in an ICS environment.
+
+### 3. **High TCP Flags (TCP_FLAGS: 22)**
+- The TCP flags value of **22** represents a combination of SYN, ACK, and PSH flags. This combination is not typical for regular communication and may indicate an attempt to establish a connection quickly and push data immediately, which can be a sign of malicious activity.
+
+### 4. **Short Flow Duration (FLOW_DURATION_MILLISECONDS: 0)**
+- The flow duration is **0 milliseconds**, indicating that the connection was extremely short-lived. Such short-lived connections can be indicative of scanning or probing activities.
+
+### 5. **Consistent Packet Sizes**
+- The **longest packet (44 bytes)** and **shortest packet (40 bytes)** are very close in size. Consistent packet sizes can be indicative of automated tools or scripts being used, rather than human-driven traffic.
+
+### 6. **Previous Suspicious Connections**
+- The previous connections involving the source IP (172.31.69.13) show attempts to connect to various other internal IPs and ports (e.g., port 6669, 5859, and 3306). These ports are often associated with non-standard services or databases (e.g., MySQL on port 3306).
+- The previous connections also have short durations and small packet sizes, indicating potential scanning or probing activities.
+
+### 7. **High Throughput for Short Duration**
+- Despite the short duration, the **source-to-destination average throughput (352000 bps)** and **destination-to-source average throughput (320000 bps)** are relatively high. This suggests a burst of data being transferred quickly, which can be a sign of data exfiltration or command and control communication.
+
+### 8. **Low Packet Count**
+- The flow consists of only **1 packet in each direction**, which is unusual for legitimate communication and may indicate an attempt to avoid detection by keeping traffic minimal.
+
+### Summary
+The combination of using an uncommon protocol (DNP3), the presence of internal IP addresses, unusual TCP flags, extremely short flow duration, consistent packet sizes, and previous suspicious connections all contribute to the NetFlow being flagged as malicious. These patterns align with behaviors often seen in scanning, probing, or unauthorized access attempts within a network, particularly targeting ICS environments.

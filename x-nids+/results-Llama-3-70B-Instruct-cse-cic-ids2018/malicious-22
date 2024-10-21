@@ -1,0 +1,11 @@
+This NetFlow sample is considered malicious due to several feature values that deviate from normal network activity. Here's a breakdown of the indicators:
+
+1. **Source IP**: The source IP address (18.216.24.42) originates from Hilliard, Ohio, United States, and has been known for being part of a DDoS botnet. This suggests that the traffic may be malicious.
+2. **Protocol**: The protocol used is TCP (protocol 6), which is common for web traffic. However, the L7 protocol (7.0) indicates HTTP traffic, which is unusual considering the internal destination IP address (172.31.69.28).
+3. **TCP Flags**: The cumulative TCP flags (219) and client TCP flags (219) are unusual and may indicate scanning or malicious activities.
+4. **Flow Duration**: The flow duration (4294964 milliseconds) is unusually long, which could be an indicator of a persistent connection, potentially maintaining access to the system.
+5. **Packet Size**: The longest packet size (975 bytes) and shortest packet size (40 bytes) deviate from normal packet sizes, indicating anomalous packet sizes.
+6. **Throughput**: The average throughput (992000 bps for src-to-dst and 2288000 bps for dst-to-src) is unusually high, which may indicate data exfiltration or a DDoS attack.
+7. **Packet Distribution**: The distribution of packets by size (8 packets up to 128 bytes, 1 packet between 256-512 bytes, and 1 packet between 512-1024 bytes) suggests an unusual pattern.
+
+Considering these indicators, the Network Intrusion Detection System has flagged this NetFlow sample as malicious due to its suspicious characteristics, which may indicate a potential data exfiltration or DDoS attack.
