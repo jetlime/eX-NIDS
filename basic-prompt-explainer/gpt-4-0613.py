@@ -5,14 +5,13 @@ from tqdm import tqdm
 
 load_dotenv()
 GPT_API_KEY = getenv("GPT_API_KEY")
-
 client = OpenAI(api_key=GPT_API_KEY)
 
 
-def evaluation(dataset_folder):
-    file_names = listdir(f"./evaluation-set-{dataset_folder}")
+def evaluation():
+    file_names = listdir(f"../dataset/basic-prompt-explainer-evaluation-set/")
     for file_name in tqdm(file_names):
-        with open(f'./evaluation-set-{dataset_folder}/{file_name}', 'r') as file:
+        with open(f'../dataset/basic-prompt-explainer-evaluation-set/{file_name}', 'r') as file:
             prompt = file.read()
         response = client.chat.completions.create(
             model="gpt-4-0613",
@@ -22,13 +21,12 @@ def evaluation(dataset_folder):
             ],
             seed=1234,
             n=1,
-            temperature=0.2,
+            temperature=0.4,
         )
 
         result = response.choices[0].message.content
-        file = open(f'./results-gpt-4-0613-{dataset_folder}/{file_name}', 'w')
+        file = open(f'./results-gpt-4-0613/{file_name}', 'w')
         file.write(result)
         file.close()
 
-evaluation("unsw-nb15")
-evaluation("cse-cic-ids2018")
+evaluation()

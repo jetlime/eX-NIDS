@@ -2,10 +2,10 @@ from tqdm import tqdm
 from os import listdir
 from openai import OpenAI
 
-def evaluation(dataset_folder):
-    file_names = listdir(f"./evaluation-set-{dataset_folder}")
+def evaluation():
+    file_names = listdir(f"../dataset/augmented-prompt-explainer-evaluation-set/")
     for file_name in tqdm(file_names):
-        with open(f"./evaluation-set-{dataset_folder}/{file_name}", "r") as file:
+        with open(f"../dataset/augmented-prompt-explainer-evaluation-set/{file_name}", "r") as file:
             user_prompt = file.read()
 
         client = OpenAI(base_url="http://localhost:1234/v1", api_key="lm-studio")
@@ -25,4 +25,4 @@ def evaluation(dataset_folder):
         file.write(result)
         file.close()
 
-evaluation("cse-cic-ids2018")
+evaluation()
